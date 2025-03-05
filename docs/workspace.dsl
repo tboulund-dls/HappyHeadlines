@@ -25,14 +25,14 @@ workspace {
 
         }
 
-        newsletterService -> subscriber
-        reader -> website "Consumes news from the website"
-        publisher -> webapp "Writes articles for the system"
-        webapp -> publisherService
-        publisherService -> articleDatabase
+        hh.newsletterService -> subscriber
+        reader -> hh.website "Consumes news from the website"
+        publisher -> hh.webapp "Writes articles for the system"
+        hh.webapp -> hh.publisherService
+        hh.publisherService -> hh.articleDatabase
 
-        website -> articleService
-        articleService -> articleDatabase
+        hh.website -> hh.articleService
+        hh.articleService -> hh.articleDatabase
         
         // bps = softwareSystem "Blood Pressure System" "A system to collect blood pressure measurements by patients to be analysed by the patients doctor." {
 

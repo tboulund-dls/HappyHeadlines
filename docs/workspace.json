@@ -1,0 +1,339 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2025-03-05T14:51:43Z",
+  "model" : {
+    "people" : [ {
+      "description" : "Drops by the website to get positive news from around the world.",
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "Reader",
+      "properties" : {
+        "structurizr.dsl.identifier" : "reader"
+      },
+      "relationships" : [ {
+        "description" : "Consumes news from the website",
+        "destinationId" : "5",
+        "id" : "15",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Consumes news from the website",
+        "destinationId" : "4",
+        "id" : "16",
+        "linkedRelationshipId" : "15",
+        "sourceId" : "1"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Gets his positive news from mails or reader applications.",
+      "id" : "2",
+      "location" : "Unspecified",
+      "name" : "Subscriber",
+      "properties" : {
+        "structurizr.dsl.identifier" : "subscriber"
+      },
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Writes articles for the HappyHeadlines news.",
+      "id" : "3",
+      "location" : "Unspecified",
+      "name" : "Publisher",
+      "properties" : {
+        "structurizr.dsl.identifier" : "publisher"
+      },
+      "relationships" : [ {
+        "description" : "Writes articles for the system",
+        "destinationId" : "7",
+        "id" : "17",
+        "sourceId" : "3",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Writes articles for the system",
+        "destinationId" : "4",
+        "id" : "18",
+        "linkedRelationshipId" : "17",
+        "sourceId" : "3"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "components" : [ {
+          "documentation" : { },
+          "id" : "6",
+          "name" : "Hello",
+          "properties" : {
+            "structurizr.dsl.identifier" : "testcomponent"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "documentation" : { },
+        "id" : "5",
+        "name" : "Website",
+        "properties" : {
+          "structurizr.dsl.identifier" : "website"
+        },
+        "relationships" : [ {
+          "destinationId" : "8",
+          "id" : "21",
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,WebBrowser"
+      }, {
+        "documentation" : { },
+        "id" : "7",
+        "name" : "Webapp",
+        "properties" : {
+          "structurizr.dsl.identifier" : "webapp"
+        },
+        "relationships" : [ {
+          "destinationId" : "9",
+          "id" : "19",
+          "sourceId" : "7",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,WebBrowser"
+      }, {
+        "documentation" : { },
+        "id" : "8",
+        "name" : "ArticleService",
+        "properties" : {
+          "structurizr.dsl.identifier" : "articleservice"
+        },
+        "relationships" : [ {
+          "destinationId" : "11",
+          "id" : "22",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,Service",
+        "technology" : "API"
+      }, {
+        "documentation" : { },
+        "id" : "9",
+        "name" : "PublisherService",
+        "properties" : {
+          "structurizr.dsl.identifier" : "publisherservice"
+        },
+        "relationships" : [ {
+          "destinationId" : "11",
+          "id" : "20",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,Service",
+        "technology" : "API"
+      }, {
+        "documentation" : { },
+        "id" : "10",
+        "name" : "NewsLetterService",
+        "properties" : {
+          "structurizr.dsl.identifier" : "newsletterservice"
+        },
+        "relationships" : [ {
+          "destinationId" : "2",
+          "id" : "13",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,Service"
+      }, {
+        "documentation" : { },
+        "id" : "11",
+        "name" : "ArticleDatabase",
+        "properties" : {
+          "structurizr.dsl.identifier" : "articledatabase"
+        },
+        "tags" : "Element,Container,Database"
+      }, {
+        "documentation" : { },
+        "id" : "12",
+        "name" : "SubscriberDatabase",
+        "properties" : {
+          "structurizr.dsl.identifier" : "subscriberdatabase"
+        },
+        "tags" : "Element,Container,Database"
+      } ],
+      "description" : "Your go-to source for uplifting, inspiring, and feel-good news from around the world.",
+      "documentation" : { },
+      "id" : "4",
+      "location" : "Unspecified",
+      "name" : "Hapy Headlines",
+      "properties" : {
+        "structurizr.dsl.identifier" : "hh"
+      },
+      "relationships" : [ {
+        "destinationId" : "2",
+        "id" : "14",
+        "linkedRelationshipId" : "13",
+        "sourceId" : "4"
+      } ],
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKICAgIG1vZGVsIHsKCgogICAgICAgIC8vIEFjdG9ycwogICAgICAgIHJlYWRlciA9IHBlcnNvbiAiUmVhZGVyIiAiRHJvcHMgYnkgdGhlIHdlYnNpdGUgdG8gZ2V0IHBvc2l0aXZlIG5ld3MgZnJvbSBhcm91bmQgdGhlIHdvcmxkLiIKICAgICAgICBzdWJzY3JpYmVyID0gcGVyc29uICJTdWJzY3JpYmVyIiAiR2V0cyBoaXMgcG9zaXRpdmUgbmV3cyBmcm9tIG1haWxzIG9yIHJlYWRlciBhcHBsaWNhdGlvbnMuIgogICAgICAgIHB1Ymxpc2hlciA9IHBlcnNvbiAiUHVibGlzaGVyIiAiV3JpdGVzIGFydGljbGVzIGZvciB0aGUgSGFwcHlIZWFkbGluZXMgbmV3cy4iCgogICAgICAgIGhoID0gc29mdHdhcmVTeXN0ZW0gIkhhcHkgSGVhZGxpbmVzIiAiWW91ciBnby10byBzb3VyY2UgZm9yIHVwbGlmdGluZywgaW5zcGlyaW5nLCBhbmQgZmVlbC1nb29kIG5ld3MgZnJvbSBhcm91bmQgdGhlIHdvcmxkLiIgewogICAgICAgICAgICB3ZWJzaXRlID0gY29udGFpbmVyICJXZWJzaXRlIiAiIiAiIiAiV2ViQnJvd3NlciIgewogICAgICAgICAgICAgICAgdGVzdENvbXBvbmVudCA9IGNvbXBvbmVudCAiSGVsbG8iCiAgICAgICAgICAgIH0KICAgICAgICAgICAgd2ViYXBwID0gY29udGFpbmVyICJXZWJhcHAiICIiICIiICJXZWJCcm93c2VyIgoKICAgICAgICAgICAgYXJ0aWNsZVNlcnZpY2UgPSBjb250YWluZXIgIkFydGljbGVTZXJ2aWNlIiAiIiAiQVBJIiAiU2VydmljZSIKICAgICAgICAgICAgcHVibGlzaGVyU2VydmljZSA9IGNvbnRhaW5lciAiUHVibGlzaGVyU2VydmljZSIgIiIgIkFQSSIgIlNlcnZpY2UiCiAgICAgICAgICAgIG5ld3NsZXR0ZXJTZXJ2aWNlID0gY29udGFpbmVyICJOZXdzTGV0dGVyU2VydmljZSIgIiIgIiIgIlNlcnZpY2UiCgogICAgICAgICAgICBhcnRpY2xlRGF0YWJhc2UgPSBjb250YWluZXIgIkFydGljbGVEYXRhYmFzZSIgIiIgIiIgIkRhdGFiYXNlIgogICAgICAgICAgICBzdWJzY3JpYmVyRGF0YWJhc2UgPSBjb250YWluZXIgIlN1YnNjcmliZXJEYXRhYmFzZSIgIiIgIiIgIkRhdGFiYXNlIgoKICAgICAgICB9CgogICAgICAgIG5ld3NsZXR0ZXJTZXJ2aWNlIC0+IHN1YnNjcmliZXIKICAgICAgICByZWFkZXIgLT4gd2Vic2l0ZSAiQ29uc3VtZXMgbmV3cyBmcm9tIHRoZSB3ZWJzaXRlIgogICAgICAgIHB1Ymxpc2hlciAtPiB3ZWJhcHAgIldyaXRlcyBhcnRpY2xlcyBmb3IgdGhlIHN5c3RlbSIKICAgICAgICB3ZWJhcHAgLT4gcHVibGlzaGVyU2VydmljZQogICAgICAgIHB1Ymxpc2hlclNlcnZpY2UgLT4gYXJ0aWNsZURhdGFiYXNlCgogICAgICAgIHdlYnNpdGUgLT4gYXJ0aWNsZVNlcnZpY2UKICAgICAgICBhcnRpY2xlU2VydmljZSAtPiBhcnRpY2xlRGF0YWJhc2UKICAgICAgICAKICAgICAgICAvLyBicHMgPSBzb2Z0d2FyZVN5c3RlbSAiQmxvb2QgUHJlc3N1cmUgU3lzdGVtIiAiQSBzeXN0ZW0gdG8gY29sbGVjdCBibG9vZCBwcmVzc3VyZSBtZWFzdXJlbWVudHMgYnkgcGF0aWVudHMgdG8gYmUgYW5hbHlzZWQgYnkgdGhlIHBhdGllbnRzIGRvY3Rvci4iIHsKCiAgICAgICAgLy8gICAgIGRiID0gY29udGFpbmVyICJEYXRhYmFzZSIgIlN0b3JlcyBwYXRpZW50IGFuZCBtZWFzdXJlbWVudCBkYXRhIiB7CiAgICAgICAgLy8gICAgICAgICAhZG9jcyBEYXRhYmFzZQogICAgICAgIC8vICAgICAgICAgdGFncyAiRGF0YWJhc2UiCiAgICAgICAgLy8gICAgICAgICB0ZWNobm9sb2d5ICJNeVNRTCIKICAgICAgICAvLyAgICAgfQoKICAgICAgICAvLyAgICAgcGF0aWVudEFwcCA9IGNvbnRhaW5lciAiUGF0aWVudCBBcHAiICJBcHAgZm9yIHBhdGllbnQgdG8gZW50ZXIgZGV0YWlscyBhYm91dCB0aGVpciBsYXRlc3QgYmxvb2QgcHJlc3N1cmUgbWVhc3VyZW1lbnQiIHsKICAgICAgICAvLyAgICAgICAgICFkb2NzIFBhdGllbnRBcHAKICAgICAgICAvLyAgICAgICAgIHRhZ3MgIkFwcCIKICAgICAgICAvLyAgICAgICAgIHRlY2hub2xvZ3kgImlPUy9BbmRyb2lkIgogICAgICAgIC8vICAgICB9CiAgICAgICAgLy8gICAgIHBhdGllbnRTZXJ2aWNlID0gY29udGFpbmVyICJQYXRpZW50IFNlcnZpY2UiICJSZXNwb25zaWJsZSBmb3IgaGFuZGxpbmcgZGF0YSByZWxhdGVkIHRvIHRoZSBwYXRpZW50cyIgewogICAgICAgIC8vICAgICAgICAgIWRvY3MgUGF0aWVudFNlcnZpY2UKICAgICAgICAvLyAgICAgICAgIHRlY2hub2xvZ3kgIlJFU1QiCiAgICAgICAgLy8gICAgICAgICBwYXRpZW50Q29udHJvbGxlciA9IGNvbXBvbmVudCAiUGF0aWVudCBDb250cm9sbGVyIiAiUmVzcG9uc2libGUgZm9yIGdldHRpbmcgcmVxdWVzdHMgcmVsYXRlZCB0byBmZXRjaGluZyBvciBzdG9yaW5nIG5ldyBwYXRpZW50IGRhdGEiCiAgICAgICAgLy8gICAgICAgICBwYXRpZW50UmVwb3NpdG9yeSA9IGNvbXBvbmVudCAiUGF0aWVudCBSZXBvc2l0b3J5IiAiUmVzcG9uc2libGUgZm9yIHN0b3JpbmcgYW5kIHJldHJpZXZpbmcgcGF0aWVudCBkYXRhIgogICAgICAgIC8vICAgICB9CiAgICAgICAgICAgIAogICAgICAgIC8vICAgICBwYXRpZW50QXBwIC0+IHBhdGllbnRDb250cm9sbGVyICJHRVQiCiAgICAgICAgLy8gICAgIHBhdGllbnRTZXJ2aWNlIC0+IGRiICJVc2VzIgogICAgICAgICAgICAKICAgICAgICAvLyAgICAgZG9jdG9yVUkgPSBjb250YWluZXIgIkRvY3RvciBVSSIgIldlYiBpbnRlcmZhY2UgZm9yIGRvY3RvciB0byB2aWV3IGFuZCBtYW5hZ2UgYmxvb2QgcHJlc3N1cmUgbWVhc3VyZW1lbnRzIiB7CiAgICAgICAgLy8gICAgICAgICAhZG9jcyBEb2N0b3JVSQogICAgICAgIC8vICAgICAgICAgdGFncyAiV2ViQnJvd3NlciIKICAgICAgICAvLyAgICAgICAgIHRlY2hub2xvZ3kgIkhUTUwvSlMiCiAgICAgICAgLy8gICAgIH0KICAgICAgICAvLyAgICAgbWVhc3VyZW1lbnRTZXJ2aWNlID0gY29udGFpbmVyICJNZWFzdXJlbWVudCBTZXJ2aWNlIiAiUmVzcG9uc2libGUgZm9yIGhhbmRsaW5nIGRhdGEgcmVsYXRlZCB0byB0aGUgYmxvb2QgcHJlc3N1cmUgbWVhc3VyZW1lbnRzIiB7CiAgICAgICAgLy8gICAgICAgICAhZG9jcyBNZWFzdXJlbWVudFNlcnZpY2UKICAgICAgICAvLyAgICAgICAgIHRlY2hub2xvZ3kgIlJFU1QiCiAgICAgICAgLy8gICAgICAgICBtZWFzdXJlbWVudENvbnRyb2xsZXIgPSBjb21wb25lbnQgIk1lYXN1cmVtZW50IENvbnRyb2xsZXIiICJSZXNwb25zaWJsZSBmb3IgZ2V0dGluZyByZXF1ZXN0cyByZWxhdGVkIHRvIGZldGNoaW5nIG9yIHN0b3JpbmcgbmV3IGFuZCB1cGRhdGVkIG1lYXN1cmVtZW50IGRhdGEiCiAgICAgICAgLy8gICAgICAgICBtZWFzdXJlbWVudFJlcG9zaXRvcnkgPSBjb21wb25lbnQgIk1lYXN1cmVtZW50IFJlcG9zaXRvcnkiICJSZXNwb25zaWJsZSBmb3Igc3RvcmluZyBhbmQgcmV0cmlldmluZyBtZWFzdXJlbWVudCBkYXRhIgogICAgICAgIC8vICAgICB9CiAgICAgICAgICAgIAogICAgICAgIC8vICAgICBkb2N0b3JVSSAtPiBtZWFzdXJlbWVudENvbnRyb2xsZXIgIkdFVC9ERUxFVEUvUFVUIiB7CiAgICAgICAgLy8gICAgICAgICB0YWdzICJSRVNUIgogICAgICAgIC8vICAgICB9CiAgICAgICAgLy8gICAgIGRvY3RvclVJIC0+IHBhdGllbnRDb250cm9sbGVyICJQT1NUIiB7CiAgICAgICAgLy8gICAgICAgICB0YWdzICJSRVNUIgogICAgICAgIC8vICAgICB9CiAgICAgICAgLy8gICAgIG1lYXN1cmVtZW50U2VydmljZSAtPiBkYiAiVXNlcyIKICAgICAgICAvLyAgICAgcGF0aWVudEFwcCAtPiBtZWFzdXJlbWVudENvbnRyb2xsZXIgIlBPU1QiCgogICAgICAgIC8vICAgICBwYXRpZW50Q29udHJvbGxlciAtPiBwYXRpZW50UmVwb3NpdG9yeSAiVXNlcyIKICAgICAgICAvLyAgICAgcGF0aWVudFJlcG9zaXRvcnkgLT4gZGIgIlVzZXMiCgogICAgICAgIC8vICAgICBtZWFzdXJlbWVudENvbnRyb2xsZXIgLT4gbWVhc3VyZW1lbnRSZXBvc2l0b3J5ICJVc2VzIgogICAgICAgIC8vICAgICBtZWFzdXJlbWVudFJlcG9zaXRvcnkgLT4gZGIgIlVzZXMiCiAgICAgICAgLy8gfQogICAgICAgIAogICAgICAgIC8vIHBhdGllbnQgLT4gcGF0aWVudEFwcCAiRW50ZXJzIGRhdGEiCiAgICAgICAgLy8gZG9jdG9yIC0+IGRvY3RvclVJICJXb3JrcyB3aXRoIGRhdGEiCiAgICB9CgogICAgdmlld3MgewogICAgICAgIHN5c3RlbUNvbnRleHQgaGggIlN5c3RlbUNvbnRleHQiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBoaCAiSGFwcHlIZWFkbGluZXMiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICB9CiAgICAgICAgCiAgICAgICAgLy8gY29udGFpbmVyIGJwcyAiQmxvb2RQcmVzc3VyZVN5c3RlbSIgewogICAgICAgIC8vICAgICBpbmNsdWRlICoKICAgICAgICAvLyAgICAgYXV0b2xheW91dCBscgogICAgICAgIC8vIH0KCiAgICAgICAgLy8gY29tcG9uZW50IHBhdGllbnRTZXJ2aWNlICJQYXRpZW50U2VydmljZSIgewogICAgICAgIC8vICAgICBpbmNsdWRlICoKICAgICAgICAvLyAgICAgYXV0b2xheW91dCBscgogICAgICAgIC8vIH0KCiAgICAgICAgLy8gY29tcG9uZW50IG1lYXN1cmVtZW50U2VydmljZSAiTWVhc3VyZW1lbnRTZXJ2aWNlIiB7CiAgICAgICAgLy8gICAgIGluY2x1ZGUgKgogICAgICAgIC8vICAgICBhdXRvbGF5b3V0IGxyCiAgICAgICAgLy8gfQogICAgICAgIAogICAgICAgIHN0eWxlcyB7CiAgICAgICAgICAgIGVsZW1lbnQgIkVsZW1lbnQiIHsKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJQZXJzb24iIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzliMTkxZgogICAgICAgICAgICAgICAgc2hhcGUgcGVyc29uCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiU29mdHdhcmUgU3lzdGVtIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICNiYTFlMjUKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJBcHAiIHsKICAgICAgICAgICAgICAgIHNoYXBlICJNb2JpbGVEZXZpY2VMYW5kc2NhcGUiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiRGF0YWJhc2UiIHsKICAgICAgICAgICAgICAgIHNoYXBlIGN5bGluZGVyCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiQ29udGFpbmVyIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICNkOTIzMmIKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJDb21wb25lbnQiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgI0U2NkM1QQogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIldlYkJyb3dzZXIiIHsKICAgICAgICAgICAgICAgIHNoYXBlIFdlYkJyb3dzZXIKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJRdWV1ZSIgewogICAgICAgICAgICAgICAgc2hhcGUgUGlwZQogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIlNlcnZpY2UiIHsKICAgICAgICAgICAgICAgIHNoYXBlIEhleGFnb24KICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KfQ=="
+  },
+  "views" : {
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "HappyHeadlines",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : {
+        "elements" : [ {
+          "color" : "#ffffff",
+          "tag" : "Element"
+        }, {
+          "background" : "#9b191f",
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "background" : "#ba1e25",
+          "tag" : "Software System"
+        }, {
+          "shape" : "MobileDeviceLandscape",
+          "tag" : "App"
+        }, {
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "background" : "#d9232b",
+          "tag" : "Container"
+        }, {
+          "background" : "#e66c5a",
+          "tag" : "Component"
+        }, {
+          "shape" : "WebBrowser",
+          "tag" : "WebBrowser"
+        }, {
+          "shape" : "Pipe",
+          "tag" : "Queue"
+        }, {
+          "shape" : "Hexagon",
+          "tag" : "Service"
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "dimensions" : {
+        "height" : 3158,
+        "width" : 3070
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 200,
+        "y" : 165
+      }, {
+        "id" : "2",
+        "x" : 1675,
+        "y" : 2523
+      }, {
+        "id" : "3",
+        "x" : 200,
+        "y" : 1365
+      }, {
+        "id" : "5",
+        "x" : 900,
+        "y" : 215
+      }, {
+        "id" : "7",
+        "x" : 900,
+        "y" : 1415
+      }, {
+        "id" : "8",
+        "x" : 1650,
+        "y" : 365
+      }, {
+        "id" : "9",
+        "x" : 1650,
+        "y" : 1265
+      }, {
+        "id" : "10",
+        "x" : 900,
+        "y" : 2015
+      }, {
+        "id" : "11",
+        "x" : 2400,
+        "y" : 815
+      }, {
+        "id" : "12",
+        "x" : 900,
+        "y" : 815
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "HappyHeadlines",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "13"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "19"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "22"
+      } ],
+      "softwareSystemId" : "4"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "SystemContext",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "14"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "18"
+      } ],
+      "softwareSystemId" : "4"
+    } ]
+  }
+}

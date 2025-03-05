@@ -1,0 +1,22 @@
+@startuml Schema
+
+entity Measurements {
+    * id : int
+    --
+    * datetime: datetime
+    * systolic: int
+    * diastolic: int
+    * patientSSN: varchar(10)
+    * seen : bit
+}
+
+entity Patients { 
+    * ssn : varchar(10)
+    --
+    * mail: varchar(128)
+    * name: varchar(50)
+}
+
+Patients||..o{Measurements
+
+@enduml

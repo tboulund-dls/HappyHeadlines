@@ -1,0 +1,7 @@
+@startuml DataModel
+    class Patient {
+        SSN: string
+        Mail: string
+        Name: string
+    }
+@enduml

@@ -10,7 +10,7 @@ workspace {
         subscriber = person "Subscriber" "Gets his positive news from mails or reader applications."
         publisher = person "Publisher" "Writes articles for the HappyHeadlines news."
 
-        hh = softwareSystem "Hapy Headlines" "Your go-to source for uplifting, inspiring, and feel-good news from around the world." {
+        hh = softwareSystem "Happy Headlines" "Your go-to source for uplifting, inspiring, and feel-good news from around the world." {
             website = container "Website" "" "" "WebBrowser" {
                 testComponent = component "Hello"
             }

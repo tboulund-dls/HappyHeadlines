@@ -1,4 +1,7 @@
 workspace {
+
+    !identifiers hierarchical
+
     model {
 
 

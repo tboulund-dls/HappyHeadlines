@@ -7,7 +7,8 @@ workspace {
 
         // Actors
         reader = person "Reader" "Drops by the website to get positive news from around the world."
-        subscriber = person "Subscriber" "Gets his positive news from mails or reader applications."
+        basicSubscriber = person "BasicSubscriber" "Gets his positive news from mails or reader applications."
+        proSubscriber = person "ProSubscriber" "Receives a mail with the latest news immediately after they are published"
         publisher = person "Publisher" "Writes articles for the HappyHeadlines news."
 
         hh = softwareSystem "Happy Headlines" "Your go-to source for uplifting, inspiring, and feel-good news from around the world." {
@@ -16,19 +17,37 @@ workspace {
             }
             webapp = container "Webapp" "" "" "WebBrowser"
 
-            articleService = container "ArticleService" "" "API" "Service"
+            articleService = container "ArticleService" "" "API" "Service"  {
+                !docs MeasurementService
+            }
             publisherService = container "PublisherService" "" "API" "Service"
             newsletterService = container "NewsletterService" "" "" "Service"
+            draftService = container "DrafService" "" "" "Service"
+            subscriberService = container "SubscriberService" "" "" "Service"
 
             articleDatabase = container "ArticleDatabase" "" "" "Database"
             subscriberDatabase = container "SubscriberDatabase" "" "" "Database"
+            draftDatabase = container "DraftDatabase" "" "" "Database"
 
+            articleQueue = container "ArticleQueue" "" "" "Queue"
+
+            publisherService -> articleQueue "When an article is being published the article will be put into this queue." {
+                
+            }
+            webApp -> draftService "saving a draft"
+            draftService -> draftDatabase
+            subscriberService -> subscriberDatabase
+            newsletterService -> subscriberService
+
+            newsletterService -> articleService "Request article for daily newsletter"
+            newsletterService -> articleQueue "Subscribes to receive the latest news first for immediate newsletter"
         }
 
-        hh.newsletterService -> subscriber
+        hh.publisherService -> proSubscriber
+        hh.newsletterService -> basicSubscriber
         reader -> hh.website "Consumes news from the website"
         publisher -> hh.webapp "Writes articles for the system"
-        hh.webapp -> hh.publisherService
+        hh.webapp -> hh.publisherService "publishing an article"
         hh.publisherService -> hh.articleDatabase
 
         hh.website -> hh.articleService
@@ -143,6 +162,9 @@ workspace {
             }
             element "Queue" {
                 shape Pipe
+                stroke #d9232b
+                background white
+                color black
             }
             element "Service" {
                 shape Hexagon

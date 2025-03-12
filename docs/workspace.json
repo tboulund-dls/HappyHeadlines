@@ -3,7 +3,8 @@
   "description" : "Description",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2025-03-12T14:19:53Z",
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2025-03-12T14:20:48Z",
   "model" : {
     "people" : [ {
       "description" : "Drops by the website to get positive news from around the world.",
@@ -263,6 +264,7 @@
     "configuration" : {
       "branding" : { },
       "lastSavedView" : "HappyHeadlines",
+      "metadataSymbols" : "SquareBrackets",
       "styles" : {
         "elements" : [ {
           "color" : "#ffffff",
@@ -353,12 +355,12 @@
         "y" : 215
       }, {
         "id" : "17",
-        "x" : 2420,
-        "y" : 1840
+        "x" : 2290,
+        "y" : 1760
       }, {
         "id" : "26",
         "x" : 900,
-        "y" : 1723
+        "y" : 1745
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
       "key" : "HappyHeadlines",
@@ -390,7 +392,11 @@
           "y" : 820
         } ]
       }, {
-        "id" : "24"
+        "id" : "24",
+        "vertices" : [ {
+          "x" : 2310,
+          "y" : 1110
+        } ]
       }, {
         "id" : "25"
       }, {

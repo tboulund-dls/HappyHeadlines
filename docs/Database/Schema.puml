@@ -1,22 +1,71 @@
-@startuml Schema
+@startuml
+!define PRIMARY_KEY(x) <b>x</b>
+!define FOREIGN_KEY(x) <u>x</u>
 
-entity Measurements {
-    * id : int
-    --
-    * datetime: datetime
-    * systolic: int
-    * diastolic: int
-    * patientSSN: varchar(10)
-    * seen : bit
+entity Article {
+    PRIMARY_KEY(id): UUID
+    title: String
+    content: Text
+    published_at: DateTime
 }
 
-entity Patients { 
-    * ssn : varchar(10)
-    --
-    * mail: varchar(128)
-    * name: varchar(50)
+entity Draft {
+    PRIMARY_KEY(id): UUID
+    title: String
+    content: Text
+    author_id: UUID
+    created_at: DateTime
+    updated_at: DateTime
 }
 
-Patients||..o{Measurements
+entity Comment {
+    PRIMARY_KEY(id): UUID
+    article_id: UUID
+    user_id: UUID
+    content: Text
+    created_at: DateTime
+}
 
+entity Subscriber {
+    PRIMARY_KEY(id): UUID
+    email: String
+    subscription_type: Enum (Basic, Pro)
+    subscribed_at: DateTime
+}
+
+entity ArticleQueue {
+    PRIMARY_KEY(id): UUID
+    article_id: UUID
+    status: Enum (Pending, Processed)
+    created_at: DateTime
+}
+
+entity User {
+    PRIMARY_KEY(id): UUID
+    name: String
+    email: String
+    role: Enum (Reader, Publisher, Moderator)
+}
+
+entity NewsletterLog {
+    PRIMARY_KEY(id): UUID
+    subscriber_id: UUID
+    article_id: UUID
+    sent_at: DateTime
+}
+
+entity MailpitLog {
+    PRIMARY_KEY(id): UUID
+    subscriber_id: UUID
+    email_subject: String
+    sent_at: DateTime
+}
+
+Draft::author_id -- User::id
+Comment::article_id -- Article::id
+Comment::user_id -- User::id
+Subscriber::id -- NewsletterLog::subscriber_id
+Article::id -- NewsletterLog::article_id
+ArticleQueue::article_id -- Article::id
+Subscriber::id -- MailpitLog::subscriber_id
 @enduml

@@ -1,4 +1,12 @@
 services:
+
+  test:
+    build:
+      context: test
+      dockerfile: Dockerfile
+    depends_on:
+      - mailpit
+
   structurizr:
     image: structurizr/lite
     ports:

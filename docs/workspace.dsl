@@ -10,6 +10,7 @@ workspace {
         basicSubscriber = person "BasicSubscriber" "Gets his positive news from mails or reader applications."
         proSubscriber = person "ProSubscriber" "Receives a mail with the latest news immediately after they are published"
         publisher = person "Publisher" "Writes articles for the HappyHeadlines news."
+        moderator = person "Moderator" "Moderate the comments people post to the articles."
 
         hh = softwareSystem "Happy Headlines" "Your go-to source for uplifting, inspiring, and feel-good news from around the world." {
             website = container "Website" "Shows the ten most recent articles with one focus article in the very top." "" "WebBrowser" 
@@ -39,9 +40,15 @@ workspace {
             
             newsletterService -> articleService "Request article for daily newsletter"
             newsletterService -> articleQueue "Subscribes to receive the latest news first for immediate newsletter"
-
             newsletterService -> proSubscriber "Sends out the latest news immediately after they are published."
             newsletterService -> basicSubscriber "Sends out the latest news daily."
+
+            commentService = container "CommentService" "Responsible for handling comments on articles." "" "Service"
+            commentDatabase = container "CommentDatabase" "Stores all comments that are posted on articles." "" "Database"
+            website -> commentService "Requesting comments"
+            commentService -> commentDatabase "Fetching comments"
+            website -> commentService "Posting a comment"
+            commentService -> commentDatabase "Storing a comment"
             
             // webapp = container "Webapp" "" "" "WebBrowser"
 

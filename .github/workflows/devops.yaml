@@ -50,7 +50,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_SERVER_IP }}
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           password: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
-          source: "compose.yaml,docs"
+          source: "compose.yaml,compose-live,docs"
           target: hh/
           rm: true
           
@@ -67,5 +67,5 @@ jobs:
           envs: NEW_VERSION,RABBITMQ_ADMIN_PASSWORD
           script: |
             cd hh
-            docker compose pull
-            docker compose up -d
+            docker compose -f compose.yaml -f compose-live.yaml pull
+            docker compose -f compose.yaml -f compose-live.yaml up -d

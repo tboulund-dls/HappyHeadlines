@@ -37,6 +37,9 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: happy-headlines
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_ADMIN_PASSWORD}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
 
 volumes:
   mailpit-data:
+  rabbitmq-data:

@@ -3,8 +3,7 @@
   "description" : "Description",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedAgent" : "structurizr-ui",
-  "lastModifiedDate" : "2025-03-13T09:38:14Z",
+  "lastModifiedDate" : "2025-03-14T13:17:38Z",
   "model" : {
     "people" : [ {
       "description" : "Drops by the website to get positive news from around the world.",
@@ -383,7 +382,6 @@
     "configuration" : {
       "branding" : { },
       "lastSavedView" : "HappyHeadlines",
-      "metadataSymbols" : "SquareBrackets",
       "styles" : {
         "elements" : [ {
           "background" : "#d3d3d3",

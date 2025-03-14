@@ -1,0 +1,74 @@
+{
+	"rabbit_version": "3.13.7",
+	"rabbitmq_version": "3.13.7",
+	"product_name": "RabbitMQ",
+	"product_version": "3.13.7",
+	"users": [
+		{
+			"name": "adm",
+			"password_hash": "h8as4mfbf0Ze67gWwgQZc6PE5UTGN3+3Hl2WSbf+SV25cFaC",
+			"hashing_algorithm": "rabbit_password_hashing_sha256",
+			"tags": [
+				"administrator"
+			],
+			"limits": {}
+		},
+		{
+			"name": "dev",
+			"password_hash": "it7ITIjIy9CCGoBWEJJZNCBGB86AxldtlJFmcOFxD6JC60hp",
+			"hashing_algorithm": "rabbit_password_hashing_sha256",
+			"tags": [
+				"management"
+			],
+			"limits": {}
+		},
+		{
+			"name": "app",
+			"password_hash": "eHbo5yGnwLX3RGCgCIioVQvmkO96DX8064gvMQvHlmObLlez",
+			"hashing_algorithm": "rabbit_password_hashing_sha256",
+			"tags": [],
+			"limits": {}
+		}
+	],
+	"vhosts": [
+		{
+			"name": "/",
+			"description": "Default virtual host",
+			"tags": [],
+			"metadata": {
+				"description": "Default virtual host",
+				"tags": []
+			}
+		}
+	],
+	"permissions": [
+		{
+			"user": "app",
+			"vhost": "/",
+			"configure": ".*",
+			"write": ".*",
+			"read": ".*"
+		},
+		{
+			"user": "dev",
+			"vhost": "/",
+			"configure": ".*",
+			"write": ".*",
+			"read": ".*"
+		},
+		{
+			"user": "adm",
+			"vhost": "/",
+			"configure": ".*",
+			"write": ".*",
+			"read": ".*"
+		}
+	],
+	"topic_permissions": [],
+	"parameters": [],
+	"global_parameters": [],
+	"policies": [],
+	"queues": [],
+	"exchanges": [],
+	"bindings": []
+}

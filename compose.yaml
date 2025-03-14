@@ -36,9 +36,6 @@ services:
       - "15672:15672"
     environment:
       RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
-    # environment:
-    #   RABBITMQ_DEFAULT_USER: happy-headlines
-    #   RABBITMQ_DEFAULT_PASS: happy-headlines
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
       - ./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json

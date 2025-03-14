@@ -34,13 +34,13 @@ jobs:
         run: |
           export NEW_VERSION=${{ steps.semver-app.outputs.version }}
 
-          docker compose build 
-          docker compose push
+          docker compose -f compose.yaml -f compose-live.yaml build 
+          docker compose -f compose.yaml -f compose-live.yaml push
 
       # Mark this version as latest
       - name: Mark as latest
         run: |
-          docker tag ghcr.io/tboulund-dls/happy-headlines-test:${NEW_VERSION} ghcr.io/tboulund-dls/happy-headlines-test:latest
+          docker tag ghcr.io/tboulund-dls/happy-headlines-test:${{ steps.semver-app.outputs.version }} ghcr.io/tboulund-dls/happy-headlines-test:latest
           docker push ghcr.io/tboulund-dls/happy-headlines-test:latest
           
       # Copy the Docker Compose file to the server

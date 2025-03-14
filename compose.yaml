@@ -1,7 +1,7 @@
 services:
 
   test:
-    image: ghcr.io/tboulund-dls/happy-headlines-test:${NEW_VERSION}
+    image: ghcr.io/tboulund-dls/happy-headlines-test:latest
     build:
       context: test
       dockerfile: Dockerfile
@@ -36,7 +36,7 @@ services:
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: happy-headlines
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_ADMIN_PASSWORD}
+      RABBITMQ_DEFAULT_PASS: happy-headlines
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 

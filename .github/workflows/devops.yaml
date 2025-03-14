@@ -53,11 +53,12 @@ jobs:
         uses: appleboy/ssh-action@v1.2.1
         env:
           NEW_VERSION: ${{ steps.semver-app.outputs.version }}
+          RABBITMQ_ADMIN_PASSWORD: ${{ secrets.RABBITMQ_ADMIN_PASSWORD }}
         with:
           host: ${{ secrets.PRODUCTION_SERVER_IP }}
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           password: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
-          envs: NEW_VERSION
+          envs: NEW_VERSION,RABBITMQ_ADMIN_PASSWORD
           script: |
             cd hh
             docker compose pull

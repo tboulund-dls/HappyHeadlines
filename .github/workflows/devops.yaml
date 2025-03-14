@@ -51,7 +51,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_SERVER_IP }}
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           password: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
-          source: "compose.yaml,compose-live.yaml,docs"
+          source: "compose.yaml,rabbitmq-definitions.json,compose-live.yaml,docs"
           target: hh/
           rm: true
           

@@ -36,6 +36,12 @@ jobs:
 
           docker compose build 
           docker compose push
+
+      # Mark this version as latest
+      - name: Mark as latest
+        run: |
+          docker tag ghcr.io/tboulund-dls/happy-headlines-test:${NEW_VERSION} ghcr.io/tboulund-dls/happy-headlines-test:latest
+          docker push ghcr.io/tboulund-dls/happy-headlines-test:latest
           
       # Copy the Docker Compose file to the server
       - name: Deliver to server

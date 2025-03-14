@@ -61,6 +61,8 @@ workspace {
             subscriberDatabase = container "SubscriberDatabase" "Stores all subscribers." "" "Database"
             website -> subscriberService "Subscribe to newsletters"
             website -> subscriberService "Unsubscribe from newsletters"
+            subscriberService -> subscriberDatabase "Storing a subscriber"
+            subscriberService -> subscriberDatabase "Removing a subscriber"
         }
         hh.newsletterService -> mailpit "Sends out newsletters to subscribers."
     }

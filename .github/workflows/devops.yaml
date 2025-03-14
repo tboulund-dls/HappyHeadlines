@@ -43,7 +43,7 @@ jobs:
         with:
           host: ${{ secrets.PRODUCTION_SERVER_IP }}
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
-          key: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
+          password: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
           source: "compose.yaml"
           target: hh/
           rm: true
@@ -56,7 +56,7 @@ jobs:
         with:
           host: ${{ secrets.PRODUCTION_SERVER_IP }}
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
-          key: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
+          password: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
           envs: NEW_VERSION
           script: |
             cd hh

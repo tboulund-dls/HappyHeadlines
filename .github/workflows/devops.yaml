@@ -1,0 +1,64 @@
+name: DevOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        
+      - name: Application Version
+        id: semver-app
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          bump_each_commit: true
+          
+      # Log in to GitHub Container Registry (GHCR
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build the Docker image
+      - name: Build and Push Docker image
+        run: |
+          export NEW_VERSION=${{ steps.semver-app.outputs.version }}
+
+          docker compose build 
+          docker compose push
+          
+      # Copy the Docker Compose file to the server
+      - name: Deliver to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.PRODUCTION_SERVER_IP }}
+          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
+          key: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
+          source: "compose.yaml"
+          target: hh/
+          rm: true
+          
+      # Ask staging server to update
+      - name: Update server
+        uses: appleboy/ssh-action@v1.2.1
+        env:
+          NEW_VERSION: ${{ steps.semver-app.outputs.version }}
+        with:
+          host: ${{ secrets.PRODUCTION_SERVER_IP }}
+          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
+          key: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
+          envs: NEW_VERSION
+          script: |
+            cd hh
+            docker compose pull
+            docker compose up -d

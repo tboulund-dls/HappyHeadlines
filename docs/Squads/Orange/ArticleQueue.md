@@ -1,0 +1,1 @@
+<!-- Create a class diagram of the message this queue will contain -->

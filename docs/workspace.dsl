@@ -16,6 +16,8 @@ workspace {
         }
 
         hh = softwareSystem "Happy Headlines" "Your go-to source for uplifting, inspiring, and feel-good news from around the world." {
+            !docs System
+
             website = container "Website" "Shows the ten most recent articles with one focus article in the very top." "" "WebBrowser,BlueSquad" {
                 !docs Squads/Blue/Website.md
                 !include Squads/Blue/Website.dsl
@@ -41,6 +43,7 @@ workspace {
                 !include Squads/Orange/PublisherService.dsl
             }
             draftService = container "DraftService" "Responsible for saving drafts of articles." "REST API" "Service,BlackSquad" {
+                !docs Squads/Black/DraftService.md
                 !include Squads/Black/DraftService.dsl
             }
             draftDatabase = container "DraftDatabase" "Stores all drafts of articles." "" "Database,BlackSquad" {
@@ -60,7 +63,7 @@ workspace {
             publisherService -> articleQueue "When an article is being published the article will be put into this queue."
 
 
-            commentService = container "CommentService" "Responsible for handling comments on articles." "" "Service,GreenSquad" {
+            commentService = container "CommentService" "Responsible for handling comments on articles." "REST API" "Service,GreenSquad" {
                 !include Squads/Green/CommentService.dsl
             }
             commentDatabase = container "CommentDatabase" "Stores all comments that are posted on articles." "" "Database,GreenSquad" {
@@ -71,7 +74,7 @@ workspace {
             website -> commentService "Posting a comment"
             commentService -> commentDatabase "Storing a comment"
 
-            subscriberService = container "SubscriberService" "Responsible for handling subscribers." "" "Service,PurpleSquad" {
+            subscriberService = container "SubscriberService" "Responsible for handling subscribers." "REST API" "Service,PurpleSquad" {
                 !include Squads/Purple/SubscriberService.dsl
             }
             subscriberDatabase = container "SubscriberDatabase" "Stores all subscribers." "" "Database,PurpleSquad" {
@@ -86,7 +89,7 @@ workspace {
             subscriberService -> subscriberDatabase "Removing a subscriber"
             subscriberService -> subscriberQueue "When a subscriber subscribes, the subscriber will be put into this queue."
 
-            newsletterService = container "NewsletterService" "Responsible for sending out newsletters to subscribers." "" "Service,RedSquad"{
+            newsletterService = container "NewsletterService" "Responsible for sending out newsletters to subscribers." "REST API" "Service,RedSquad"{
                 !include Squads/Red/NewsletterService.dsl
             }
             newsletterService -> articleService "Request article for daily newsletter"
@@ -96,6 +99,19 @@ workspace {
             newsletterService -> subscriberService "Gets all subscribers to send the newsletters to."
             mailpit -> proSubscriber "Sends out the latest news immediately after they are published."
             mailpit -> basicSubscriber "Sends out the latest news daily."
+
+            profanityService = container "ProfanityService" "Responsible for filtering out profanity in comments." "REST API" "Service,CyanSquad" {
+                !include Squads/Cyan/ProfanityService.dsl
+            }
+            profanityDatabase = container "ProfanityDatabase" "Stores all profanity words." "" "Database,CyanSquad" {
+                !docs Squads/Cyan/ProfanityDatabase.md
+            }
+            commentService -> profanityService "Filtering out profanity"
+            profanityService -> profanityDatabase "Fetching profanity words"
+            webapp -> profanityService "Adding a new profanity word"
+            webapp -> profanityService "Removing a profanity word"
+            webapp -> profanityService "Fetching all profanity words"
+
         }
         hh.newsletterService -> mailpit "Sends out newsletters to subscribers."
     }
@@ -154,6 +170,11 @@ workspace {
             autoLayout lr
         }
 
+        component hh.profanityService "ProfanityService" {
+            include *
+            autoLayout lr
+        }
+
         styles {
             element "ThirdParty" {
                 background lightgray
@@ -200,6 +221,10 @@ workspace {
             }
             element "RedSquad" {
                 background red
+            }
+            element "CyanSquad" {
+                background cyan
+                color black
             }
             element "Queue" {
                 shape Pipe

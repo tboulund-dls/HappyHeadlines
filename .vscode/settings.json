@@ -1,5 +1,7 @@
 {
     "plantuml.exportFormat": "png",
-    "plantuml.exportOutDir": "",
-    "plantuml.exportSubFolder": false
+    "plantuml.exportOutDir": "/",
+    "plantuml.exportSubFolder": false,
+    "mermaid-editor.generate.quality": 100,
+    "mermaid-editor.generate.scale": 1
 }

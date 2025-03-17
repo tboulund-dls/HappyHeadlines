@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "systemticks.c4-dsl-extension",
+        "tomoyukim.vscode-mermaid-editor",
         "jebbs.plantuml"
     ]
 }

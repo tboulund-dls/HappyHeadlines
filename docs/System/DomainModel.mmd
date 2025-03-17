@@ -1,0 +1,54 @@
+classDiagram
+    class Profanity {
+        id: UUID
+        word: string
+    }
+
+    class Subscriber {
+        name: String
+        email: String
+        type: SubscriberType
+    }
+
+    class Article {
+        id: UUID
+        title: String
+        content: Text
+        publishedAt: DateTime
+        comments: List~Comment~
+        author: Author
+    }
+
+    class Draft {
+        id: UUID
+        title: String
+        content: Text
+        author: Author
+    }
+
+    class Comment {
+        id: UUID
+        content: Text
+        author: Author
+        postedAt: DateTime
+    }
+
+    class Author {
+        id: UUID
+        name: String
+        email: String
+        articles: List~Article~
+        comments: List~Comment~
+    }
+
+    class SubscriberType {
+        DAILY
+        NEWSSTREAM
+    }
+
+		%% Relationships with inferred cardinalities
+    Author "1" -- "0..*" Article : writes
+    Author "1" -- "0..*" Draft : drafts
+    Author "1" -- "0..*" Comment : writes
+    Article "1" -- "0..*" Comment : has
+    Subscriber "1" -- "1" SubscriberType : has type

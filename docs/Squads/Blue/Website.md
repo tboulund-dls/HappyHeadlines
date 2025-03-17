@@ -1,0 +1,1 @@
+<!-- Create mockups of the website here - must include a frontpage and a page displaying a full article. -->

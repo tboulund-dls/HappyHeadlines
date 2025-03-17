@@ -1,0 +1,52 @@
+@startuml
+
+class Profanity {
+    word: string
+}
+
+class Subscriber {
+    name: String
+    email: String
+    type: SubscriberType
+}
+
+class Article {
+    title: String
+    content: Text
+    publishedAt: DateTime
+    comments: List<Comment>
+    author: Author
+}
+
+class Draft {
+    title: String
+    content: Text
+    author: Author
+}
+
+class Comment {
+    content: Text
+    author: Author
+    postedAt: DateTime
+}
+
+class Author {
+    name: String
+    email: String
+    articles: List<Article>
+    comments: List<Comment>
+}
+
+enum SubscriberType {
+    DAILY
+    NEWSSTREAM
+}
+
+' Relationships with inferred cardinalities
+Author "1" --> "0..*" Article : writes
+Author "1" --> "0..*" Draft : drafts
+Author "1" --> "0..*" Comment : writes
+Article "1" --> "0..*" Comment : has
+Subscriber  -- SubscriberType : has type
+
+@enduml

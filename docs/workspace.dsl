@@ -23,6 +23,7 @@ workspace {
                 !include Squads/Blue/Website.dsl
             }
             articleService = container "ArticleService" "Responsible for collecting articles for (sub)systems that request them." "REST API"  "Service,RedSquad" {
+                !docs Squads/Red/ArticleService.md
                 !include Squads/Red/ArticleService.dsl
             }
             articleDatabase = container "ArticleDatabase" "Stores all articles that are published on the website." "" "Database,RedSquad" {
@@ -40,6 +41,7 @@ workspace {
                 !include Squads/Orange/Webapp.dsl
             }
             publisherService = container "PublisherService" "Responsible for handling the publishing of articles." "REST API" "Service,OrangeSquad" {
+                !docs Squads/Orange/PublisherService.md
                 !include Squads/Orange/PublisherService.dsl
             }
             draftService = container "DraftService" "Responsible for saving drafts of articles." "REST API" "Service,BlackSquad" {
@@ -64,6 +66,7 @@ workspace {
 
 
             commentService = container "CommentService" "Responsible for handling comments on articles." "REST API" "Service,GreenSquad" {
+                !docs Squads/Green/CommentService.md
                 !include Squads/Green/CommentService.dsl
             }
             commentDatabase = container "CommentDatabase" "Stores all comments that are posted on articles." "" "Database,GreenSquad" {
@@ -75,6 +78,7 @@ workspace {
             commentService -> commentDatabase "Storing a comment"
 
             subscriberService = container "SubscriberService" "Responsible for handling subscribers." "REST API" "Service,PurpleSquad" {
+                !docs Squads/Purple/SubscriberService.md
                 !include Squads/Purple/SubscriberService.dsl
             }
             subscriberDatabase = container "SubscriberDatabase" "Stores all subscribers." "" "Database,PurpleSquad" {
@@ -90,6 +94,7 @@ workspace {
             subscriberService -> subscriberQueue "When a subscriber subscribes, the subscriber will be put into this queue."
 
             newsletterService = container "NewsletterService" "Responsible for sending out newsletters to subscribers." "REST API" "Service,RedSquad"{
+                !docs Squads/Red/NewsletterService.md
                 !include Squads/Red/NewsletterService.dsl
             }
             newsletterService -> articleService "Request article for daily newsletter"
@@ -101,6 +106,7 @@ workspace {
             mailpit -> basicSubscriber "Sends out the latest news daily."
 
             profanityService = container "ProfanityService" "Responsible for filtering out profanity in comments." "REST API" "Service,CyanSquad" {
+                !docs Squads/Cyan/ProfanityService.md
                 !include Squads/Cyan/ProfanityService.dsl
             }
             profanityDatabase = container "ProfanityDatabase" "Stores all profanity words." "" "Database,CyanSquad" {

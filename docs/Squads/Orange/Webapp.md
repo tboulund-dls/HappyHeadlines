@@ -1,1 +1,1 @@
-<!-- Create mockups of the website here - must include an overview of current drafts and an editor view. -->
+<!-- Create mockups of the website here - must include an overview of current drafts, an editor view and management of the profanity filter. -->

@@ -70,4 +70,4 @@ jobs:
             cd hh
             docker compose -f compose.yaml -f compose-live.yaml down
             docker compose -f compose.yaml -f compose-live.yaml pull
-            docker compose -f compose.yaml -f compose-live.yaml up --attach structurizr
+            docker compose -f compose.yaml -f compose-live.yaml up -d

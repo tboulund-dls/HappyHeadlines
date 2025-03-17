@@ -68,5 +68,6 @@ jobs:
           envs: NEW_VERSION,RABBITMQ_ADMIN_PASSWORD
           script: |
             cd hh
+            docker compose -f compose.yaml -f compose-live.yaml down
             docker compose -f compose.yaml -f compose-live.yaml pull
             docker compose -f compose.yaml -f compose-live.yaml up --attach structurizr

@@ -1,9 +1,0 @@
-@startuml DataModel
-    class Measurements {
-        Id: int
-        Date: DateTime
-        Systolic: int
-        Diastolic: int
-        Seen: bool
-    }
-@enduml

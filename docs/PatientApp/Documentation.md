@@ -1,3 +1,0 @@
-## Wireframes
-
-![](Wireframe.drawio.svg)

@@ -1,1 +1,19 @@
-<!-- Create a database schema of the database and display it here -->
+```text
+┌───────────────────────────┐       ┌───────────────────────────┐
+│      Subscriber           │       │    Subscription Type      │
+├───────────────────────────┤       ├───────────────────────────┤
+│ Id (PK) : uuid            │       │ Id (PK) : uuid            │
+│ E-mail  : nvarchar        │       │ Type    : nvarchar        │
+└─────────────┬─────────────┘       └──────────────┬────────────┘
+              │                                    │
+              │                                    │
+              │                                    │
+              │                                    │
+┌─────────────▼──────────────────────────────────┐ │
+│         Subscriber Subscription                │ │
+├────────────────────────────────────────────────┤ │
+│ Id (PK)                   : uuid               │ │
+│ Subscriber Id (FK)        : uuid               │ │
+│ Subscription Type Id (FK) : uuid               │<┘
+└────────────────────────────────────────────────┘
+```

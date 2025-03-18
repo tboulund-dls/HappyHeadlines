@@ -1,1 +1,5 @@
-<!-- Create mockups of the portal here - here it must be able to manage profanity words -->
+# Profanity Portal
+
+A use can manage the profanity database trough this frontends ui, 
+that includes adding new profanity words to the database, 
+remove words currently in the database and getting a list of words currently in it.

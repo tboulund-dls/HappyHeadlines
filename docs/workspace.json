@@ -3,8 +3,7 @@
   "description" : "Description",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedAgent" : "structurizr-ui",
-  "lastModifiedDate" : "2025-03-18T06:44:50Z",
+  "lastModifiedDate" : "2025-03-18T09:19:11Z",
   "model" : {
     "people" : [ {
       "description" : "Drops by the website to get positive news from around the world.",
@@ -467,7 +466,7 @@
         "description" : "Responsible for sending out newsletters to subscribers.",
         "documentation" : {
           "sections" : [ {
-            "content" : "<!-- Account for the REST-endpoints of your API here -->",
+            "content" : "<!-- Account for the REST-endpoints of your API here -->\n<!-- Draw mockups of the different mails sent by the service -->",
             "format" : "Markdown",
             "order" : 1,
             "title" : ""
@@ -759,7 +758,6 @@
     "configuration" : {
       "branding" : { },
       "lastSavedView" : "HappyHeadlines",
-      "metadataSymbols" : "SquareBrackets",
       "styles" : {
         "elements" : [ {
           "background" : "#d3d3d3",
@@ -1073,7 +1071,7 @@
     } ],
     "systemContextViews" : [ {
       "automaticLayout" : {
-        "applied" : true,
+        "applied" : false,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -1081,38 +1079,34 @@
         "rankSeparation" : 300,
         "vertices" : false
       },
-      "dimensions" : {
-        "height" : 2200,
-        "width" : 3000
-      },
       "elements" : [ {
         "id" : "1",
-        "x" : 200,
-        "y" : 165
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "2",
-        "x" : 2400,
-        "y" : 515
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "3",
-        "x" : 2400,
-        "y" : 1215
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "4",
-        "x" : 200,
-        "y" : 865
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "5",
-        "x" : 200,
-        "y" : 1565
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "6",
-        "x" : 1650,
-        "y" : 915
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "7",
-        "x" : 900,
-        "y" : 915
+        "x" : 0,
+        "y" : 0
       } ],
       "enterpriseBoundaryVisible" : true,
       "key" : "SystemContext",

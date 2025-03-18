@@ -1,3 +1,5 @@
-app.components.ts = components "Service"
+// App-name cannot contain spaces :) 
+AppComponents = component "app.components.ts"
 
-hh.profanityPortal.app.components.ts -> profanityPortal "Frontend service, that sends api requests to backend"
+// profanityPortal can't refer to itself - as such it's not really needed on level 3
+// hh.profanityPortal.AppComponents -> profanityPortal "Frontend service, that sends api requests to backend"

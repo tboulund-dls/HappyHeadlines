@@ -105,6 +105,10 @@ workspace {
             mailpit -> proSubscriber "Sends out the latest news immediately after they are published."
             mailpit -> basicSubscriber "Sends out the latest news daily."
 
+            profanityPortal = container "ProfanityPortal" "The portal where profanity words can be added, removed, and fetched." "" "WebBrowser,CyanSquad" {
+                !docs Squads/Cyan/ProfanityPortal.md
+                !include Squads/Cyan/ProfanityPortal.dsl
+            }
             profanityService = container "ProfanityService" "Responsible for filtering out profanity in comments." "REST API" "Service,CyanSquad" {
                 !docs Squads/Cyan/ProfanityService.md
                 !include Squads/Cyan/ProfanityService.dsl
@@ -112,11 +116,12 @@ workspace {
             profanityDatabase = container "ProfanityDatabase" "Stores all profanity words." "" "Database,CyanSquad" {
                 !docs Squads/Cyan/ProfanityDatabase.md
             }
+            moderator -> profanityPortal "Filtering out profanity"
             commentService -> profanityService "Filtering out profanity"
             profanityService -> profanityDatabase "Fetching profanity words"
-            webapp -> profanityService "Adding a new profanity word"
-            webapp -> profanityService "Removing a profanity word"
-            webapp -> profanityService "Fetching all profanity words"
+            profanityPortal -> profanityService "Adding a new profanity word"
+            profanityPortal -> profanityService "Removing a profanity word"
+            profanityPortal -> profanityService "Fetching all profanity words"
 
         }
         hh.newsletterService -> mailpit "Sends out newsletters to subscribers."

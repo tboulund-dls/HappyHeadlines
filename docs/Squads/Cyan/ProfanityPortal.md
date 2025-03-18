@@ -1,0 +1,1 @@
+<!-- Create mockups of the portal here - here it must be able to manage profanity words -->

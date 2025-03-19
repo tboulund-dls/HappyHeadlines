@@ -3,8 +3,7 @@
   "description" : "Description",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedAgent" : "structurizr-ui",
-  "lastModifiedDate" : "2025-03-18T12:40:00Z",
+  "lastModifiedDate" : "2025-03-19T09:59:59Z",
   "model" : {
     "people" : [ {
       "description" : "Drops by the website to get positive news from around the world.",
@@ -791,7 +790,7 @@
       "order" : 10
     }, {
       "automaticLayout" : {
-        "applied" : true,
+        "applied" : false,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -800,22 +799,18 @@
         "vertices" : false
       },
       "containerId" : "55",
-      "dimensions" : {
-        "height" : 811,
-        "width" : 2390
-      },
       "elements" : [ {
         "id" : "56",
-        "x" : 220,
-        "y" : 185
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "57",
-        "x" : 970,
-        "y" : 185
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "58",
-        "x" : 1720,
-        "y" : 185
+        "x" : 0,
+        "y" : 0
       } ],
       "externalContainerBoundariesVisible" : false,
       "key" : "ProfanityService",
@@ -828,8 +823,7 @@
     } ],
     "configuration" : {
       "branding" : { },
-      "lastSavedView" : "SystemContext",
-      "metadataSymbols" : "SquareBrackets",
+      "lastSavedView" : "ProfanityService",
       "styles" : {
         "elements" : [ {
           "background" : "#d3d3d3",
@@ -1143,7 +1137,7 @@
     } ],
     "systemContextViews" : [ {
       "automaticLayout" : {
-        "applied" : true,
+        "applied" : false,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -1151,38 +1145,34 @@
         "rankSeparation" : 300,
         "vertices" : false
       },
-      "dimensions" : {
-        "height" : 2200,
-        "width" : 3000
-      },
       "elements" : [ {
         "id" : "1",
-        "x" : 200,
-        "y" : 165
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "2",
-        "x" : 2400,
-        "y" : 515
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "3",
-        "x" : 2400,
-        "y" : 1215
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "4",
-        "x" : 200,
-        "y" : 865
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "5",
-        "x" : 200,
-        "y" : 1565
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "6",
-        "x" : 1650,
-        "y" : 915
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "7",
-        "x" : 900,
-        "y" : 915
+        "x" : 0,
+        "y" : 0
       } ],
       "enterpriseBoundaryVisible" : true,
       "key" : "SystemContext",

@@ -1,1 +1,11 @@
-<!-- Create a database schema of the database and display it here -->
+CREATE TABLE Draft (
+id INT PRIMARY KEY AUTO_INCREMENT,
+title VARCHAR(255) NOT NULL,
+content TEXT NOT NULL,
+author VARCHAR(100) NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_draft_title ON Draft(title);
+CREATE INDEX idx_draft_author ON Draft(author);

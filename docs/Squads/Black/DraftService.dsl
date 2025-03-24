@@ -1,6 +1,29 @@
-WebApi = component "WebApi"
-Service = component "Service"
-Database = component "Draft Database"
+workspace {
+    model {
+        DraftService = softwareSystem "DraftService" "Responsible for managing drafts of articles."
+        DraftDatabase = softwareSystem "DraftDatabase" "Stores all drafts of articles."
+        
+        DraftService -> DraftDatabase "Storing a draft"
+    }
     
-hh.draftService.WebApi -> hh.draftService.Service "Sends requests to service"
-hh.draftService.Service -> hh.draftService.Database "Sends requests to database"
+    views {
+        systemLandscape {
+            include *
+            autoLayout lr
+        }
+        
+        styles {
+            element "DraftService" {
+                shape Hexagon
+                background #000000
+                color #FFFFFF
+            }
+            
+            element "DraftDatabase" {
+                shape Cylinder
+                background #000000
+                color #FFFFFF
+            }
+        }
+    }
+}

@@ -2,6 +2,54 @@
 
 The CommentService is responsible for handling article comments, including fetching, posting, and moderating comments. It integrates with the ProfanityService to filter inappropriate content.
 
+## Models
+### Shared Models
+#### CommentDTO
+```json
+{
+  "id": "string",
+  "articleId": "string",
+  "content": "string",
+  "author": "string",
+  "createdAt": "datetime",
+  "updatedAt": "datetime"
+}
+```
+Used for returning comment data to clients in API responses.
+
+#### NewCommentDTO
+```json
+{
+  "articleId": "string",
+  "content": "string",
+  "author": "string"
+}
+```
+Used when submitting a new comment to be created.
+
+#### UpdateCommentDTO
+```json
+{
+  "content": "string",
+}
+```
+Used when updating an existing comment.
+
+### Internal Models
+#### Comment
+```json
+{
+  "id": "string",
+  "articleId": "string",
+  "content": "string",
+  "authorId":"string",
+  "author": "string",
+  "createdAt": "datetime",
+  "updatedAt": "datetime"
+}
+
+```
+
 ## Endpoints
 
 ### Get Comments
@@ -51,8 +99,9 @@ POST /api/v1/comments/{articleId}
 **Request Body:**
 ```json
 {
-  "content": "string",
-  "author": "string"
+    "articleId": "string",
+    "content": "string",
+    "author": "string",
 }
 ```
 
@@ -85,6 +134,41 @@ GET /api/v1/comments/{commentId}
   "articleId": "string",
   "content": "string",
   "author": "string",
+  "createdAt": "datetime",
+  "updatedAt": "datetime"
+}
+```
+
+### Update Comment
+
+```
+PUT /api/v1/comments/{commentId}
+```
+
+**Description:** Updates an existing comment.
+
+**Parameters:**
+- `commentId` (path): ID of the comment to update
+
+**Request Body:**
+```json
+{
+  "id": "string",
+  "articleId": "string",
+  "content": "string",
+  "author": "string",
+  "status": "pending|approved|rejected"
+}
+```
+
+**Response:**
+```json
+{
+  "id": "string",
+  "articleId": "string",
+  "content": "string",
+  "author": "string",
+  "status": "pending|approved|rejected",
   "createdAt": "datetime",
   "updatedAt": "datetime"
 }

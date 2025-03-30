@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Drafts Page</ion-title>
+    <ion-button slot="end" routerLink="/home">Home page</ion-button>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+
+<h2>Drafts List</h2>
+
+<ion-list>
+  <ion-item *ngFor="let article of drafts" (click)="selectDraft(article)">
+    <ion-label>
+      <h2>Title: {{ article.title }}</h2>
+      <p>By {{ article.author }} </p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+</ion-content>

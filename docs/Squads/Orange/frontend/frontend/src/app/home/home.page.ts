@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Article} from "../models/Article";
+import {DraftendpointsService} from "../services/draftendpoints.service";
+import {ModalController} from "@ionic/angular";
+import {ArticlereaderComponent} from "./articlereader/articlereader.component";
 
 @Component({
   selector: 'app-home',
@@ -6,8 +10,30 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  articles: Article[] = [];
 
-  constructor() {}
+  constructor(
+    private draftService: DraftendpointsService,
+    private modalController: ModalController
+              ) {}
 
+  ngOnInit() {
+    //this.loadPublioshedArticles();
+    this.articles = this.draftService.createTestDraft();
+  }
+
+  async selectArticle(article: Article) {
+    var readerView = await this.modalController.create({
+      component: ArticlereaderComponent,
+      componentProps: {
+        article: article
+      }
+    });
+    await readerView.present();
+  }
+
+  private async loadPublioshedArticles() {
+    this.articles = await this.draftService.getPublishedArticles();
+  }
 }

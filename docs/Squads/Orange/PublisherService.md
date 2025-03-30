@@ -36,12 +36,14 @@ It receives finalized drafts, validates them, stores them as published articles,
 
 The `PublisherService` exposes the following RESTful API endpoints:
 
-| Method | Endpoint              | Description                                      |
-|--------|-----------------------|--------------------------------------------------|
-| `POST` | `/publish`            | Publishes a finalized draft article             |
-| `POST` | `/moderate` _(optional)_ | Sends the article content to `ProfanityService` |
-| `GET`  | `/status/:articleId`  | Returns the current publication status of an article |
-| `GET`  | `/published`          | Retrieves a list of published articles (optional) |
+| Method | Endpoint                 | Description                                          |
+|--------|--------------------------|------------------------------------------------------|
+| `POST` | `/publish`               | Publishes a finalized draft article                  |
+| `POST` | `/safedraft`             | Publishes a finalized draft article                  |
+| `POST` | `/moderate` _(optional)_ | Sends the article content to `ProfanityService`      |
+| `GET`  | `/status/:articleId`     | Returns the current publication status of an article |
+| `GET`  | `/published`             | Retrieves a list of published articles (optional)    |
+| `GET`  | `/drafts`                | Retrieves a list of drafts                           |
 
 ---
 

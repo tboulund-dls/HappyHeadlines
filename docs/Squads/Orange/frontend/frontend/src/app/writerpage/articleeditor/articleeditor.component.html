@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Article</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="height: 80%; display: flex; flex-direction: column;">
+    <ion-item>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input [(ngModel)]="article.title"></ion-input>
+    </ion-item>
+
+    <ion-item style="flex-grow: 1; align-items: flex-start;">
+      <ion-label position="floating">Content</ion-label>
+      <ion-textarea [(ngModel)]="article.content" auto-grow="true" style="height: 100%;"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Author</ion-label>
+      <ion-input [(ngModel)]="article.author"></ion-input>
+    </ion-item>
+
+  </div>
+  <ion-button expand="full" (click)="saveArticleDraft()">Save</ion-button>
+</ion-content>

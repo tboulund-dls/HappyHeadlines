@@ -1,0 +1,12 @@
+<p>
+  Article-reader
+</p>
+
+<div style="height: 100%; display: flex; flex-direction: column; align-items: center;">
+  <H1>{{article.title}}</H1>
+  <p>By {{article.author}}</p>
+  <br>
+  <p>{{article.content}}</p>
+
+  <p>Publish date: {{article.publishedAt | date}}</p>
+</div>

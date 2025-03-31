@@ -3,6 +3,7 @@ import {DraftendpointsService} from "../../services/draftendpoints.service";
 import {ModalController} from "@ionic/angular";
 import {Article} from "../../models/Article";
 import {ArticleeditorComponent} from "../articleeditor/articleeditor.component";
+import {Draft} from "../../models/Draft";
 
 @Component({
   selector: 'app-drafts',
@@ -11,7 +12,7 @@ import {ArticleeditorComponent} from "../articleeditor/articleeditor.component";
   standalone: false,
 })
 export class DraftsComponent implements OnInit {
-  drafts: Article[] = [];
+  drafts: Draft[] = [];
 
   constructor(
     private draftService: DraftendpointsService,
@@ -24,15 +25,18 @@ export class DraftsComponent implements OnInit {
     console.log(this.drafts);
   }
 
-  private async loadDrafts() {
-    this.drafts = await this.draftService.getDrafts();
+  private loadDrafts() {
+    this.draftService.getDrafts().subscribe((data: Draft[]) => {
+      this.drafts = data;
+      console.log('Loaded drafts:', this.drafts);
+    });
   }
 
-  async selectDraft(article: Article) {
+  async selectDraft(draft: Draft) {
     var editorview = await this.modalController.create({
       component: ArticleeditorComponent,
       componentProps: {
-        article: article
+        article: draft
       }
     });
     await editorview.present();

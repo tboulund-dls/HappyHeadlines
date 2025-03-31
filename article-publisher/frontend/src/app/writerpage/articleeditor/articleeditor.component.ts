@@ -19,7 +19,7 @@ export class ArticleeditorComponent {
 
   async saveArticleDraft() {
     try {
-      await this.draftService.safeDraft(this.article);
+      await this.draftService.saveDraft(this.article);
       this.modalCtrl.dismiss({ updated: true });  //Close modal and return value to indicate the article was updated
     } catch (error) {
       console.error('Failed to save article', error);

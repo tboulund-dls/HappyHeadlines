@@ -10,7 +10,8 @@ The CommentService is responsible for handling article comments, including fetch
   "id": "string",
   "articleId": "string",
   "content": "string",
-  "author": "string",
+  "authorId": "string",
+  "authorName":"string",
   "createdAt": "datetime",
   "updatedAt": "datetime"
 }
@@ -43,7 +44,7 @@ Used when updating an existing comment.
   "articleId": "string",
   "content": "string",
   "authorId":"string",
-  "author": "string",
+  "authorName":"string",
   "createdAt": "datetime",
   "updatedAt": "datetime"
 }
@@ -74,7 +75,8 @@ GET /api/v1/comments/{articleId}?page=1&pageSize=1
       "id": "string",
       "articleId": "string",
       "content": "string",
-      "author": "string",
+      "authorId": "string",
+      "authorName":"string",
       "createdAt": "datetime",
       "updatedAt": "datetime"
     }
@@ -111,7 +113,7 @@ POST /api/v1/comments/{articleId}
   "id": "string",
   "articleId": "string",
   "content": "string",
-  "author": "string",
+  "authorId": "string",
   "createdAt": "datetime"
 }
 ```
@@ -167,7 +169,7 @@ PUT /api/v1/comments/{commentId}
   "id": "string",
   "articleId": "string",
   "content": "string",
-  "author": "string",
+  "authorId": "string",
   "status": "pending|approved|rejected",
   "createdAt": "datetime",
   "updatedAt": "datetime"

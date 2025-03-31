@@ -33,7 +33,10 @@ export class HomePage implements OnInit {
     await readerView.present();
   }
 
-  private async loadPublioshedArticles() {
-    this.articles = await this.draftService.getPublishedArticles();
+  private loadPublioshedArticles() {
+    this.draftService.getPublishedArticles().subscribe((data: Article[]) => {
+      this.articles = data;
+    });
   }
+
 }

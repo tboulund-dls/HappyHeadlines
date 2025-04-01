@@ -12,7 +12,7 @@
             "driver": "PostgreSQL",
             "name": "happyheadlines",
             "group": "happyheadlines",
-            "database": "happyheadlines",
+            "database": "comments",
             "username": "postgres",
             "password": "postgres"
         }

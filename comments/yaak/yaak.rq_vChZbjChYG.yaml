@@ -2,9 +2,9 @@ type: http_request
 model: http_request
 id: rq_vChZbjChYG
 createdAt: 2025-04-01T09:00:58.920643400
-updatedAt: 2025-04-01T09:08:52.994830900
+updatedAt: 2025-04-01T11:12:37.277191100
 workspaceId: wk_cUivN8efQf
-folderId: null
+folderId: fl_SajA5R5S7f
 authentication: {}
 authenticationType: null
 body: {}
@@ -13,6 +13,6 @@ description: ''
 headers: []
 method: GET
 name: GetCommentById
-sortPriority: 0.0
-url: http://localhost:5261/api/v1/comments/comment/{commentId}
+sortPriority: 1000.0
+url: http://localhost:8080/api/v1/comments/comment/0195f0fe-3adf-74ca-91d2-2f30cd1c36fe
 urlParameters: []

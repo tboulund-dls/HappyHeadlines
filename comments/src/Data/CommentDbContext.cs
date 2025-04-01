@@ -14,22 +14,25 @@ namespace HappyHeadlines.Comments.Data
             modelBuilder.Entity<Comment>()
                 .ToTable("comments")
                 .HasKey(c => c.Id);
+            
+            modelBuilder.Entity<Comment>()
+                .Property(c => c.Id).HasColumnName("id");
 
             modelBuilder.Entity<Comment>()
                 .Property(c => c.Content).HasColumnName("content").IsRequired();
             
             modelBuilder.Entity<Comment>()
-                .Property(c => c.ArticleId).HasColumnName("articleId");
+                .Property(c => c.ArticleId).HasColumnName("article_id");
             
             modelBuilder.Entity<Comment>()
-                .Property(c => c.AuthorId).HasColumnName("authorId");   
+                .Property(c => c.AuthorId).HasColumnName("author_id");   
 
             modelBuilder.Entity<Comment>()
-                .Property(c => c.CreatedAt).HasColumnName("createdAt")
+                .Property(c => c.CreatedAt).HasColumnName("created_at")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
             
             modelBuilder.Entity<Comment>()
-                .Property(c => c.UpdatedAt).HasColumnName("updatedAt")
+                .Property(c => c.UpdatedAt).HasColumnName("updated_at")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
         }
     }

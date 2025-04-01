@@ -1,10 +1,10 @@
 type: http_request
 model: http_request
-id: rq_Kr8AFSoWFK
-createdAt: 2025-04-01T09:00:44.988709400
-updatedAt: 2025-04-01T11:13:14.708058900
+id: rq_txSNHNdEdL
+createdAt: 2025-04-01T11:13:17.270038100
+updatedAt: 2025-04-01T11:16:36.566207300
 workspaceId: wk_cUivN8efQf
-folderId: fl_SajA5R5S7f
+folderId: fl_6PYNHdkJEg
 authentication: {}
 authenticationType: null
 body: {}
@@ -13,8 +13,8 @@ description: ''
 headers: []
 method: GET
 name: GetCommenstForArticle
-sortPriority: 875.0
-url: http://localhost:8080/api/v1/comments/fe1457d1-954b-4aee-8a00-cf4bcf2db66b
+sortPriority: 2000.0
+url: http://localhost:5261/api/v1/comments/fe1457d1-954b-4aee-8a00-cf4bcf2db66b
 urlParameters:
 - enabled: true
   name: page
@@ -22,9 +22,9 @@ urlParameters:
   id: 8EzwQtBIBY
 - enabled: true
   name: pageSize
-  value: '10'
+  value: '50'
   id: DpfQwGQShb
 - enabled: true
   name: ''
   value: ''
-  id: MQQPViju9g
+  id: 90ksrMvtCQ

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using HappyHeadlines.Comments.Models.DTOs;
 using HappyHeadlines.Comments.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,8 @@ namespace HappyHeadlines.Comments.Controllers
         [HttpGet("{articleId:guid}")]
         public async Task<ActionResult<CommentsResponseDTO>> GetCommentsByArticleId(
             Guid articleId,
-            [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 20)
+            [FromQuery] [Range(1, int.MaxValue)] int page = 1,
+            [FromQuery] [Range(1,50)] int pageSize = 20)
         {
             var response = await _commentService.GetCommentsByArticleIdAsync(articleId, page, pageSize);
             return Ok(response);

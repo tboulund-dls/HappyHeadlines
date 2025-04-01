@@ -90,7 +90,7 @@ services:
       comments-db:
         condition: service_healthy
     volumes:
-      - ./comments/migrations:/flyway/sql
+      - ./comments/sql:/flyway/sql
     environment:
       FLYWAY_URL: jdbc:postgresql://comments-db:${DB_PORT:-5432}/${DB_NAME:-comments}
       FLYWAY_USER: ${DB_USER:-postgres}

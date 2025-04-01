@@ -1,7 +1,9 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using SubscriberService.Apis;
+using SubscriberService.Application.Services;
 using SubscriberService.Infrastructure.Data;
+using SubscriberService.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,11 @@ builder.Services.AddOpenApi();
 
 // Register DbContext
 builder.Services.AddDbContext<AppDbContext>();
+
+builder.Services.AddScoped<ISubscriberRepository, SubscriberRepository>();
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+builder.Services.AddScoped<ISubscriptionTypeRepository, SubscriptionTypeRepository>();
+builder.Services.AddScoped<ISubscriberService, SubscriberService.Application.Services.SubscriberService>();
 
 // Register MassTransit
 builder.Services.AddMassTransit(options =>

@@ -18,7 +18,7 @@ public class ProfanityController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetWords()
     {
-        IEnumerable<string> result = await _service.getWordds();
+        IEnumerable<string> result = await _service.getWords();
         
         return result.Any() ? Ok(result) : BadRequest();
     }

@@ -4,7 +4,7 @@ using SharedModels;
 using SubscriberService.Domain.Dtos;
 using SubscriberService.Domain.Exceptions;
 using SubscriberService.Domain.Models;
-using SubscriberService.Infrastructure.Repositories;
+using SubscriberService.Infrastructure.Repositories.Interfaces;
 
 namespace SubscriberService.Application.Services;
 
@@ -12,17 +12,13 @@ public class SubscriberService(
     ISubscriberRepository subscriberRepository,
     ISubscriptionRepository subscriptionRepository,
     ISubscriptionTypeRepository subscriptionTypeRepository,
-    IPublishEndpoint publishEndpoint
+    IPublishEndpoint publishEndpoint,
+    ICacheRepository cacheRepository
 ) : ISubscriberService
 {
     public async Task<List<Subscriber>> GetSubscribersForSubscriptionTypeAsync(string subscriptionType)
     {
-        var subscriptionTypeEntity = await subscriptionTypeRepository.GetSubscriptionTypeByNameAsync(subscriptionType);
-        if (subscriptionTypeEntity == null)
-        {
-            throw new NotFoundException("Subscription type not found");
-        }
-
+        var subscriptionTypeEntity = await GetSubscriptionTypeAsync(subscriptionType);
         var subscribers = await subscriberRepository.GetSubscribersForSubscriptionTypeAsync(subscriptionTypeEntity);
         return subscribers.ToList();
     }
@@ -35,25 +31,8 @@ public class SubscriberService(
 
     public async Task<Subscription> SubscribeAsync(CreateSubscriptionDto createSubscriptionDto)
     {
-        var subscriber = await subscriberRepository.GetSubscriberByEmailAsync(createSubscriptionDto.Email);
-        
-        if (subscriber is null)
-        {
-            Log.Information("Creating new subscriber with email: {Email}", createSubscriptionDto.Email);
-            subscriber = new Subscriber
-            {
-                Id = Guid.NewGuid(),
-                Email = createSubscriptionDto.Email
-            };
-            await subscriberRepository.CreateSubscriberAsync(subscriber);
-        }
-
-        var subscriptionTypeEntity =
-            await subscriptionTypeRepository.GetSubscriptionTypeByNameAsync(createSubscriptionDto.SubscriptionType);
-        if (subscriptionTypeEntity == null)
-        {
-            throw new NotFoundException("Subscription type not found");
-        }
+        var subscriber = await EnsureSubscriberExistsAsync(createSubscriptionDto.Email);
+        var subscriptionTypeEntity = await GetSubscriptionTypeAsync(createSubscriptionDto.SubscriptionType);
 
         if (await subscriptionRepository.DoesUserAlreadyHaveSubscriptionAsync(createSubscriptionDto.Email,
                 createSubscriptionDto.SubscriptionType))
@@ -71,15 +50,13 @@ public class SubscriberService(
         Log.Information("Creating new subscription for email: {Email}, SubscriptionType: {SubscriptionType}",
             createSubscriptionDto.Email, createSubscriptionDto.SubscriptionType);
         var result = await subscriptionRepository.SubscribeAsync(subscription);
-        
-        Log.Information("Publishing SubscriptionCreatedEvent for email: {Email}, SubscriptionType: {SubscriptionType}",
-            createSubscriptionDto.Email, createSubscriptionDto.SubscriptionType);
-        await publishEndpoint.Publish(new SubscriptionCreatedEvent
+
+        await PublishMessage(new SubscriptionCreatedEvent
         {
-            Email = subscriber.Email,
-            SubscriptionType = subscriptionTypeEntity.Type,
+            Email = createSubscriptionDto.Email,
+            SubscriptionType = createSubscriptionDto.SubscriptionType,
         });
-        
+
         return result;
     }
 
@@ -92,6 +69,7 @@ public class SubscriberService(
         }
 
         await subscriptionRepository.UnsubscribeAsync(subscription);
+        await cacheRepository.DeleteSubscriptionTypeAsync(subscription.SubscriptionType.Type);
 
         var remainingSubscriptions =
             await subscriptionRepository.GetSubscriptionsByEmailAsync(subscription.Subscriber!.Email);
@@ -99,6 +77,66 @@ public class SubscriberService(
         {
             Log.Information("Deleting subscriber with email: {Email}", subscription.Subscriber.Email);
             await subscriberRepository.DeleteSubscriberAsync(subscription.Subscriber);
+            await cacheRepository.DeleteSubscriberAsync(subscription.Subscriber.Email);
+        }
+    }
+
+    private async Task<SubscriptionType> GetSubscriptionTypeAsync(string subscriptionType)
+    {
+        var subscriptionTypeEntity = await cacheRepository.GetSubscriptionTypeByNameAsync(subscriptionType);
+        if (subscriptionTypeEntity is not null)
+        {
+            return subscriptionTypeEntity;
+        }
+
+        subscriptionTypeEntity = await subscriptionTypeRepository.GetSubscriptionTypeByNameAsync(subscriptionType);
+        if (subscriptionTypeEntity is null)
+        {
+            throw new NotFoundException("Subscription type not found");
+        }
+
+        await cacheRepository.IndexSubscriptionTypeAsync(subscriptionTypeEntity);
+
+        return subscriptionTypeEntity;
+    }
+
+    private async Task<Subscriber> EnsureSubscriberExistsAsync(string email)
+    {
+        var subscriber = await cacheRepository.GetSubscriberByEmailAsync(email);
+        if (subscriber is not null)
+        {
+            return subscriber;
+        }
+
+        subscriber = await subscriberRepository.GetSubscriberByEmailAsync(email);
+
+        if (subscriber is null)
+        {
+            Log.Information("Creating new subscriber with email: {Email}", email);
+            subscriber = new Subscriber
+            {
+                Id = Guid.NewGuid(),
+                Email = email
+            };
+            await subscriberRepository.CreateSubscriberAsync(subscriber);
+        }
+
+        await cacheRepository.IndexSubscriberAsync(subscriber);
+        return subscriber;
+    }
+
+    private async Task PublishMessage(SubscriptionCreatedEvent subscriptionCreatedEvent)
+    {
+        try
+        {
+            Log.Information(
+                "Publishing SubscriptionCreatedEvent for email: {Email}, SubscriptionType: {SubscriptionType}",
+                subscriptionCreatedEvent.Email, subscriptionCreatedEvent.SubscriptionType);
+            await publishEndpoint.Publish(subscriptionCreatedEvent);
+        }
+        catch (Exception e)
+        {
+            Log.Error("Error publishing SubscriptionCreatedEvent: {Error}", e.Message);
         }
     }
 }

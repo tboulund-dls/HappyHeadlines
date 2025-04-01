@@ -6,6 +6,8 @@ using SubscriberService.Apis;
 using SubscriberService.Application.Services;
 using SubscriberService.Infrastructure.Data;
 using SubscriberService.Infrastructure.Repositories;
+using SubscriberService.Infrastructure.Repositories.Implementation;
+using SubscriberService.Infrastructure.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Green initiatives
 // - Reduce network package size ✅
-// - Cache data closer to the user
+// - Cache data closer to the user ✅
 // - SQLite ✅
 
 builder.Logging.ClearProviders();
@@ -42,11 +44,22 @@ builder.Services.AddOpenApi();
 
 // Register DbContext
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddSingleton<RedisContext>(provider =>
+{
+    var redisConnectionString = builder.Configuration["Redis:ConnectionString"] ?? "localhost:6379";
+    return new RedisContext(redisConnectionString);
+});
 
 builder.Services.AddScoped<ISubscriberRepository, SubscriberRepository>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<ISubscriptionTypeRepository, SubscriptionTypeRepository>();
 builder.Services.AddScoped<ISubscriberService, SubscriberService.Application.Services.SubscriberService>();
+builder.Services.AddScoped<ICacheRepository, RedisCacheRepository>(provider =>
+{
+    var redisContext = provider.GetService<RedisContext>();
+    var timeToLive = TimeSpan.FromMinutes(5);
+    return new RedisCacheRepository(redisContext, timeToLive);
+});
 
 // Register MassTransit
 builder.Services.AddMassTransit(options =>

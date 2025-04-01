@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SubscriberService.Domain.Models;
 using SubscriberService.Infrastructure.Data;
+using SubscriberService.Infrastructure.Repositories.Interfaces;
 
-namespace SubscriberService.Infrastructure.Repositories;
+namespace SubscriberService.Infrastructure.Repositories.Implementation;
 
 public class SubscriptionRepository(AppDbContext dbContext) : ISubscriptionRepository
 {
@@ -10,6 +11,7 @@ public class SubscriptionRepository(AppDbContext dbContext) : ISubscriptionRepos
     {
         var subscriptions = await dbContext.Subscriptions
             .Include(s => s.Subscriber)
+            .Include(t => t.SubscriptionType)
             .Where(s => s.Subscriber!.Email == email)
             .ToListAsync();
         

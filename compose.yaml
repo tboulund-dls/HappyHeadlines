@@ -63,11 +63,18 @@ services:
       context: .
       dockerfile: src/Squads/Purple/SubscriberService/SubscriberService/Dockerfile
     environment:
-      RabbitMQ__Host: ${RABBITMQ_HOST}
-      RABBITMQ__Username: ${RABBITMQ_USERNAME}
-      RABBITMQ__Password: ${RABBITMQ_PASSWORD}
+      RabbitMQ__Host: ${RABBITMQ_HOST:-rabbitmq}
+      RabbitMQ__Username: ${RABBITMQ_USERNAME}
+      RabbitMQ__Password: ${RABBITMQ_PASSWORD}
+      Redis__ConnectionString: ${REDIS_CONNECTION_STRING:-redis:6379}
     depends_on:
       - rabbitmq
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
       
   comments:
     image: comments

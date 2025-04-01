@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SubscriberService.Domain.Models;
 using SubscriberService.Infrastructure.Data;
+using SubscriberService.Infrastructure.Repositories.Interfaces;
 
-namespace SubscriberService.Infrastructure.Repositories;
+namespace SubscriberService.Infrastructure.Repositories.Implementation;
 
 public class SubscriberRepository(AppDbContext dbContext) : ISubscriberRepository
 {

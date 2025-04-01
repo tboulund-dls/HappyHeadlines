@@ -55,11 +55,12 @@ public static class SubscriberApi
         CancellationToken cancellationToken)
     {
         var subscriptions = await subscriberService.GetSubscriptionsByEmailAsync(email);
-        var dtos = subscriptions.Select(s => new GetSubscriptionDto
+        var dtos = subscriptions
+            .Select(s => new GetSubscriptionDto
         {
             Id = s.Id,
-            Email = s.Subscriber.Email,
-            SubscriptionType = s.SubscriptionType.Type
+            Email = s.Subscriber!.Email,
+            SubscriptionType = s.SubscriptionType!.Type
         }).ToList();
         return TypedResults.Ok(dtos);
     }
@@ -74,8 +75,8 @@ public static class SubscriberApi
             var dto = new GetSubscriptionDto
             {
                 Id = result.Id,
-                Email = result.Subscriber.Email,
-                SubscriptionType = result.SubscriptionType.Type
+                Email = result.Subscriber!.Email,
+                SubscriptionType = result.SubscriptionType!.Type
             };
             return TypedResults.Ok(dto);
         }

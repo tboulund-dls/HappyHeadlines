@@ -28,20 +28,10 @@ public class SubscriberRepository(AppDbContext dbContext) : ISubscriberRepositor
         return await dbContext.Subscribers
             .FirstOrDefaultAsync(s => s.Email == email);
     }
-    
-    public async Task<Subscriber?> GetSubscriberByIdAsync(Guid subscriberId)
+
+    public async Task DeleteSubscriberAsync(Subscriber subscriber)
     {
-        return await dbContext.Subscribers
-            .FirstOrDefaultAsync(s => s.Id == subscriberId);
-    }
-    
-    public async Task DeleteSubscriberAsync(Guid subscriberId)
-    {
-        var subscriber = await GetSubscriberByIdAsync(subscriberId);
-        if (subscriber != null)
-        {
-            dbContext.Subscribers.Remove(subscriber);
-            await dbContext.SaveChangesAsync();
-        }
+        dbContext.Subscribers.Remove(subscriber);
+        await dbContext.SaveChangesAsync();
     }
 }

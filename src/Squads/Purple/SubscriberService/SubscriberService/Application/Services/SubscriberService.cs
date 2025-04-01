@@ -25,10 +25,22 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
 
     public async Task<Subscription> SubscribeAsync(CreateSubscriptionDto createSubscriptionDto)
     {
+        var subscriber = await subscriberRepository.GetSubscriberByEmailAsync(createSubscriptionDto.Email);
+        if (subscriber is null)
+        {
+            subscriber = new Subscriber
+            {
+                Id = Guid.NewGuid(),
+                Email = createSubscriptionDto.Email
+            };
+            await subscriberRepository.CreateSubscriberAsync(subscriber);
+        }
+        
         var subscription = new Subscription
         {
             Id = Guid.NewGuid(),
-            TypeId = createSubscriptionDto.SubscriptionType
+            TypeId = createSubscriptionDto.SubscriptionType,
+            SubscriberId = subscriber.Id
         };
 
         var result = await subscriptionRepository.SubscribeAsync(subscription);
@@ -42,7 +54,13 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
         {
             throw new Exception("Subscription not found");
         }
-
+        
         await subscriptionRepository.UnsubscribeAsync(subscription);
+
+        var remainingSubscriptions = await subscriptionRepository.GetSubscriptionsByEmailAsync(subscription.Subscriber!.Email);
+        if (!remainingSubscriptions.Any())
+        {
+            await subscriberRepository.DeleteSubscriberAsync(subscription.Subscriber);
+        }
     }
 }

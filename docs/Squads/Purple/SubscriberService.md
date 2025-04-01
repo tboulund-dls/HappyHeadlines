@@ -15,8 +15,8 @@ GET /api/v1/subscribe/{subscription-type}
 | subscription-type | Yes      | string | The type of subscription to query             |
 
 **Allowed values for subscription-type:**
-- `Basic`
-- `Pro`
+- `DAILY`
+- `NEWSSTREAM`
 
 ### Get subscriptions for an e-mail (subscriber)
 
@@ -43,14 +43,14 @@ POST /api/v1/subscribe
 
 #### Request Body
 
-| Name              | Required | Type   | Description                                   |
-|-------------------|----------|--------|-----------------------------------------------|
-| subscription-type | Yes      | string | The subscription tier                         |
-| email             | Yes      | string | Email of the subscriber                       |
+| Name             | Required | Type   | Description                                   |
+|------------------|----------|--------|-----------------------------------------------|
+| SubscriptionType | Yes      | string | The subscription tier                         |
+| Email            | Yes      | string | Email of the subscriber                       |
 
 **Allowed values for subscription-type:**
-- `Basic`
-- `Pro`
+- `DAILY`
+- `NEWSSTREAM`
 
 ### Unsubscribe from newsletter
 

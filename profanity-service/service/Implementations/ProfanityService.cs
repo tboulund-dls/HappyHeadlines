@@ -1,26 +1,34 @@
-﻿using service.Interfaces;
+﻿using infrastrucure.interfaces;
+using service.Interfaces;
 
 namespace service;
 
 public class ProfanityService : IService
 {
-    public Task<IEnumerable<string>> getWordds()
+    private readonly IRepository _repository;
+
+    public ProfanityService(IRepository repository)
     {
-        throw new NotImplementedException();
+        _repository = repository;
     }
 
-    public Task<string> Clean(string message)
+    public async Task<IEnumerable<string>> getWords()
     {
-        throw new NotImplementedException();
+        return await _repository.getWords();
     }
 
-    public Task<bool> AddWord(string word)
+    public async Task<string> Clean(string message)
     {
-        throw new NotImplementedException();
+        return await _repository.Clean(message);
     }
 
-    public Task<bool> DeleteWord(int id)
+    public async Task<bool> AddWord(string word)
     {
-        throw new NotImplementedException();
+        return await _repository.AddWord(word);
+    }
+
+    public async Task<bool> DeleteWord(int id)
+    {
+        return await _repository.DeleteWord(id);
     }
 }

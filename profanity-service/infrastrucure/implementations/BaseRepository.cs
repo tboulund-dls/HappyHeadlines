@@ -4,7 +4,7 @@ namespace infrastrucure.implementations;
 
 public class BaseRepository : IRepository
 {
-    public Task<IEnumerable<string>> getWordds()
+    public Task<IEnumerable<string>> getWords()
     {
         throw new NotImplementedException();
     }

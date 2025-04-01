@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="text-align: center;">
+      Profanity Portal
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <body>
+  <div class="grid-containerX2" style="height: 95%">
+    <div style="height: 100%">
+      <ion-content #textWindow id="Textcontainer" [scrollEvents]="true">
+        <ion-list>
+          <ion-card *ngFor="let item of Words">
+            <ion-card-content>
+              <div class="grid-card-containerX2">
+                <div>{{ item }}</div>
+                <ion-button>Dellete</ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-list>
+      </ion-content>
+    </div>
+    <ion-card style="margin-bottom: 2.5%;">
+      <ion-title style="text-align: center; margin-top: 5%; font-size: 150%;">
+        Add Word
+      </ion-title>
+      <br>
+      <ion-item>
+        <ion-input placeholder="  Add Profanity...  " [formControl]="WordFc"></ion-input>
+        <ion-button (click)="AddWord()" id="button" slot="end">
+          <ion-icon name="send-outline"></ion-icon>
+          <p>&#160; Add</p>
+        </ion-button>
+      </ion-item>
+
+    </ion-card>
+  </div>
+  </body>
+</ion-content>

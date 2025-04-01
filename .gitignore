@@ -1,4 +1,5 @@
 .env
+**/.idea
 
 # Created by https://www.toptal.com/developers/gitignore/api/dotnetcore,macos,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=dotnetcore,macos,visualstudiocode
@@ -65,3 +66,4 @@ Temporary Items
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,macos,visualstudiocode
+/docs/.structurizr/index

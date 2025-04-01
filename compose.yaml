@@ -8,6 +8,16 @@ services:
     depends_on:
       - mailpit
 
+  draftservice:
+    build:
+      context: DraftService
+      dockerfile: DOCKERFILE
+    container_name: draftservice
+    ports:
+      - "5000:8080"
+    depends_on:
+      - rabbitmq
+
   structurizr:
     image: structurizr/lite
     ports:
@@ -47,7 +57,18 @@ services:
       - featurehub-h2-data:/db
     ports:
       - 8085:8085
+  
+  subscriber-service:
+    image: subscriber-service
+    build:
+      context: src/Squads/Purple/SubscriberService/SubscriberService
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    depends_on:
+      - rabbitmq
 
+  
 volumes:
   mailpit-data:
   rabbitmq-data:

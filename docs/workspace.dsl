@@ -93,6 +93,9 @@ workspace {
             subscriberService -> subscriberDatabase "Storing a subscriber"
             subscriberService -> subscriberDatabase "Removing a subscriber"
             subscriberService -> subscriberQueue "When a subscriber subscribes, the subscriber will be put into this queue."
+            subscriberService.subscriberRepository -> subscriberDatabase "CRUD operations"
+            subscriberService.rabbitMQClient -> subscriberQueue "Puts new subscribers in queue"
+            website -> subscriberService.subscriberController "Makes API calls" "HTTP"
 
             newsletterService = container "NewsletterService" "Responsible for sending out newsletters to subscribers." "REST API" "Service,RedSquad"{
                 !docs Squads/Red/NewsletterService.md
@@ -105,6 +108,7 @@ workspace {
             newsletterService -> subscriberService "Gets all subscribers to send the newsletters to."
             mailpit -> proSubscriber "Sends out the latest news immediately after they are published."
             mailpit -> basicSubscriber "Sends out the latest news daily."
+            newsletterService -> subscriberService.subscriberController "Makes API calls" "HTTP"
 
             profanityPortal = container "ProfanityPortal" "The portal where profanity words can be added, removed, and fetched." "" "WebBrowser,CyanSquad" {
                 !docs Squads/Cyan/ProfanityPortal.md

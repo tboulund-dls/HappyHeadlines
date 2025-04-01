@@ -11,7 +11,7 @@ services:
   draftservice:
     build:
       context: DraftService
-      dockerfile: Dockerfile
+      dockerfile: DOCKERFILE
     container_name: draftservice
     ports:
       - "5000:8080"

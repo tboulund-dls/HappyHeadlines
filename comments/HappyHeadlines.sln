@@ -1,8 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "comments", "src/comments.csproj", "{435A0479-B937-F913-7213-6AA62FADA1A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "comments", "src\comments.csproj", "{435A0479-B937-F913-7213-6AA62FADA1A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "..\SharedModels\SharedModels.csproj", "{1C0093B1-1071-42E3-AEB6-F6B86A5EE523}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,10 @@ Global
 		{7FF672C4-F20C-15CD-F847-BCA7772EF515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FF672C4-F20C-15CD-F847-BCA7772EF515}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FF672C4-F20C-15CD-F847-BCA7772EF515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C0093B1-1071-42E3-AEB6-F6B86A5EE523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C0093B1-1071-42E3-AEB6-F6B86A5EE523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C0093B1-1071-42E3-AEB6-F6B86A5EE523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C0093B1-1071-42E3-AEB6-F6B86A5EE523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

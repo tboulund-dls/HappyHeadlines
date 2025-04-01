@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
     container_name: draftservice
     ports:
-      - "5000:5000"
+      - "5000:8080"
     depends_on:
       - rabbitmq
 

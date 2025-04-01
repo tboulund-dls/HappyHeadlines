@@ -1,4 +1,4 @@
-﻿using SubscriberService.Models;
+﻿using SubscriberService.Domain.Models;
 
 namespace SubscriberService.Infrastructure.Repositories;
 

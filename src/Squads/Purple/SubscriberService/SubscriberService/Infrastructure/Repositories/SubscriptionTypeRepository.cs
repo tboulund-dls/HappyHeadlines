@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SubscriberService.Domain.Models;
 using SubscriberService.Infrastructure.Data;
-using SubscriberService.Models;
 
 namespace SubscriberService.Infrastructure.Repositories;
 

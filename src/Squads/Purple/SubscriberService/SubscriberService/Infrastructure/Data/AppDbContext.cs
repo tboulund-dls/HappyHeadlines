@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SubscriberService.Models;
+using SubscriberService.Domain.Models;
 
 namespace SubscriberService.Infrastructure.Data;
 

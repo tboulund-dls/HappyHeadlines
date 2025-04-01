@@ -1,11 +1,40 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
 using SubscriberService.Apis;
 using SubscriberService.Application.Services;
 using SubscriberService.Infrastructure.Data;
 using SubscriberService.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// DevOps
+// - Fault-isolated design ✅
+// - Relevant logging ✅
+// - Good planning and documentation ✅
+// - Avoid extra processing ✅
+
+// Green initiatives
+// - Reduce network package size ✅
+// - Cache data closer to the user
+// - SQLite ✅
+
+builder.Logging.ClearProviders();
+Log.Logger = new LoggerConfiguration()
+    // Set the default minimum level as Debug
+    .MinimumLevel.Is(LogEventLevel.Debug)
+    // Override specific categories:
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
+    // Write logs to console with a custom output template
+    .WriteTo.Console(
+        outputTemplate:
+        "{Timestamp:yyyy-MM-dd HH:mm:ss}|{MachineName}|{ThreadId}|{RequestId}|{Level:u3}|{Message:lj}{NewLine}{Exception}")
+    .CreateLogger();
+
+builder.Logging.AddSerilog();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using SubscriberService.Application.Services;
 using SubscriberService.Domain.Dtos;
 using SubscriberService.Domain.Exceptions;
-using SubscriberService.Models;
+using SubscriberService.Domain.Models;
 
 namespace SubscriberService.Apis;
 
@@ -39,41 +40,58 @@ public static class SubscriberApi
         }
         catch (NotFoundException e)
         {
+            Log.Error("Subscription type not found: {SubscriptionType}", subscriptionType);
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status404NotFound);
         }
         catch (Exception e)
         {
+            Log.Error("An error occurred while getting subscribers: {Error}", e.Message);
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status500InternalServerError);
         }
     }
 
-    private static async Task<Results<Ok<List<Subscription>>, ProblemHttpResult>> GetSubscriptionsForUser(
+    private static async Task<Results<Ok<List<GetSubscriptionDto>>, ProblemHttpResult>> GetSubscriptionsForUser(
         [FromQuery] string email, [FromServices] ISubscriberService subscriberService,
         CancellationToken cancellationToken)
     {
         var subscriptions = await subscriberService.GetSubscriptionsByEmailAsync(email);
-        return TypedResults.Ok(subscriptions);
+        var dtos = subscriptions.Select(s => new GetSubscriptionDto
+        {
+            Id = s.Id,
+            Email = s.Subscriber.Email,
+            SubscriptionType = s.SubscriptionType.Type
+        }).ToList();
+        return TypedResults.Ok(dtos);
     }
 
-    private static async Task<Results<Ok<Subscription>, ProblemHttpResult>> CreateSubscription(
+    private static async Task<Results<Ok<GetSubscriptionDto>, ProblemHttpResult>> CreateSubscription(
         [FromBody] CreateSubscriptionDto request, [FromServices] ISubscriberService subscriberService,
         CancellationToken cancellationToken)
     {
         try
         {
             var result = await subscriberService.SubscribeAsync(request);
-            return TypedResults.Ok(result);
+            var dto = new GetSubscriptionDto
+            {
+                Id = result.Id,
+                Email = result.Subscriber.Email,
+                SubscriptionType = result.SubscriptionType.Type
+            };
+            return TypedResults.Ok(dto);
         }
         catch (NotFoundException e)
         {
+            Log.Error("Subscription type not found: {SubscriptionType}", request.SubscriptionType);
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status404NotFound);
         }
         catch (BadRequestException e)
         {
+            Log.Error("Bad request: {Error}", e.Message);
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status400BadRequest);
         } 
         catch (Exception e)
         {
+            Log.Error("An error occurred while creating subscription: {Error}", e.Message);
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -93,10 +111,12 @@ public static class SubscriberApi
         }
         catch (NotFoundException e)
         {
+            Log.Error("Subscription not found: {SubscriptionId}", subscriptionId);
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status404NotFound);
         }
         catch (Exception e)
         {
+            Log.Error("An error occurred while deleting subscription: {Error}", e.Message);
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status500InternalServerError);
         }
     }

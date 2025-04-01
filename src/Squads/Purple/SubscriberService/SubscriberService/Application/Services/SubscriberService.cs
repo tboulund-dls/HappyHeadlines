@@ -1,9 +1,10 @@
 ﻿using MassTransit;
+using Serilog;
 using SharedModels;
 using SubscriberService.Domain.Dtos;
 using SubscriberService.Domain.Exceptions;
+using SubscriberService.Domain.Models;
 using SubscriberService.Infrastructure.Repositories;
-using SubscriberService.Models;
 
 namespace SubscriberService.Application.Services;
 
@@ -35,8 +36,10 @@ public class SubscriberService(
     public async Task<Subscription> SubscribeAsync(CreateSubscriptionDto createSubscriptionDto)
     {
         var subscriber = await subscriberRepository.GetSubscriberByEmailAsync(createSubscriptionDto.Email);
+        
         if (subscriber is null)
         {
+            Log.Information("Creating new subscriber with email: {Email}", createSubscriptionDto.Email);
             subscriber = new Subscriber
             {
                 Id = Guid.NewGuid(),
@@ -65,8 +68,12 @@ public class SubscriberService(
             SubscriberId = subscriber.Id
         };
 
+        Log.Information("Creating new subscription for email: {Email}, SubscriptionType: {SubscriptionType}",
+            createSubscriptionDto.Email, createSubscriptionDto.SubscriptionType);
         var result = await subscriptionRepository.SubscribeAsync(subscription);
         
+        Log.Information("Publishing SubscriptionCreatedEvent for email: {Email}, SubscriptionType: {SubscriptionType}",
+            createSubscriptionDto.Email, createSubscriptionDto.SubscriptionType);
         await publishEndpoint.Publish(new SubscriptionCreatedEvent
         {
             Email = subscriber.Email,
@@ -90,6 +97,7 @@ public class SubscriberService(
             await subscriptionRepository.GetSubscriptionsByEmailAsync(subscription.Subscriber!.Email);
         if (!remainingSubscriptions.Any())
         {
+            Log.Information("Deleting subscriber with email: {Email}", subscription.Subscriber.Email);
             await subscriberRepository.DeleteSubscriberAsync(subscription.Subscriber);
         }
     }

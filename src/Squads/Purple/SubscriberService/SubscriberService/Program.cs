@@ -24,10 +24,10 @@ builder.Services.AddMassTransit(options =>
         cfg.UseDelayedMessageScheduler();
 
         // Register host
-        cfg.Host(Environment.GetEnvironmentVariable("RabbitMQ__Host"), "/", h =>
+        cfg.Host(builder.Configuration["RabbitMQ:Host"] ?? "localhost", "/", h =>
         {
-            h.Username("RabbitMQ__Username");
-            h.Password("RabbitMQ__Password");
+            h.Username(builder.Configuration["RabbitMQ:Username"] ?? "guest");
+            h.Password(builder.Configuration["RabbitMQ:Password"] ?? "guest");
         });
 
         // Retry an additional three times after 5, 10, and 15 minutes

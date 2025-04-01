@@ -47,8 +47,38 @@ services:
       - featurehub-h2-data:/db
     ports:
       - 8085:8085
+        
+  profanityapi:
+    image: profanityapi
+    build:
+      context: .
+      dockerfile: profanity-service/Dockerfile
+    environment:
+      - mongoconn=random
+      - redishconn=randomredish
+    ports:
+      - "9081:8081"
+    depends_on:
+      - profanitydb
+      - profanitycache
+  
+  profanitydb:
+    image: mongodb/mongodb-community-server:7.0.5-ubuntu2204
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=profanityuser
+      - MONGO_INITDB_ROOT_PASSWORD=!Profanitypass123
+    volumes:
+      - profanitydata:/var/lib/mongodb/data
+  
+  profanitycache:
+    image: redis/redis-stack-server:latest
+    
+    
+      
+    
 
 volumes:
   mailpit-data:
   rabbitmq-data:
   featurehub-h2-data:
+  profanitydata:

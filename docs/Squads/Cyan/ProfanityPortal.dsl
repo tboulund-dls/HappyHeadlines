@@ -1,1 +1,5 @@
-# Draw level 3 diagram of this service using DSL here.
+// App-name cannot contain spaces :) 
+AppComponents = component "app.components.ts"
+
+// profanityPortal can't refer to itself - as such it's not really needed on level 3
+// hh.profanityPortal.AppComponents -> profanityPortal "Frontend service, that sends api requests to backend"

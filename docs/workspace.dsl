@@ -17,6 +17,7 @@ workspace {
 
         hh = softwareSystem "Happy Headlines" "Your go-to source for uplifting, inspiring, and feel-good news from around the world." {
             !docs System
+            !docs RabbitMQ
 
             website = container "Website" "Shows the ten most recent articles with one focus article in the very top." "" "WebBrowser,BlueSquad" {
                 !docs Squads/Blue/Website.md

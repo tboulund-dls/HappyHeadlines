@@ -10,11 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 // Register DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
-    options.UseSqlite("Data Source=Subscribers.db");
-});
+builder.Services.AddDbContext<AppDbContext>();
 
 // Register MassTransit
 builder.Services.AddMassTransit(options =>
@@ -52,6 +48,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+}
+
+// Apply migrations automatically at startup
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
 }
 
 app.UseHttpsRedirection();

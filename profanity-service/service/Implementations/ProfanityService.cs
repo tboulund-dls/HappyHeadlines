@@ -14,7 +14,7 @@ public class ProfanityService : IService
 
     public async Task<IEnumerable<string>> getWords()
     {
-        return await _repository.GetWords();
+        throw new NotImplementedException();
     }
 
     public async Task<string> Clean(string message)
@@ -24,11 +24,11 @@ public class ProfanityService : IService
 
     public async Task<bool> AddWord(string word)
     {
-        return await _repository.AddWord(word);
+        throw new NotImplementedException();
     }
 
     public async Task<bool> DeleteWord(int id)
     {
-        return await _repository.DeleteWord(id);
+        throw new NotImplementedException();
     }
 }

@@ -1,9 +1,9 @@
-using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace infrastrucure.Models;
 
 public class WordDbModel
 {
-    public ObjectId Id { get; set; }
+    [BsonId]
     public string Word { get; set; }
 }

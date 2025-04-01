@@ -1,26 +1,53 @@
-﻿using infrastrucure.interfaces;
+﻿using infrastrucure.Context;
+using infrastrucure.interfaces;
+using infrastrucure.Mappers;
+using infrastrucure.Models;
+using MongoDB.Driver;
+using service.Models;
 
 namespace infrastrucure.implementations;
 
 public class MongoDbRepository : IRepository
 {
-    public Task<IEnumerable<string>> GetWords()
+    
+    private readonly MongoDbContext _dbContext;
+    
+    public MongoDbRepository(MongoDbContext dbContext)
     {
-        throw new NotImplementedException();
+        _dbContext = dbContext;
+    }
+    
+    public async Task<IEnumerable<WordModel>> GetWords()
+    {
+        var words = await _dbContext.Words.Find(_ => true).ToListAsync();
+        return words.Select(x => x.ToModel());
     }
 
-    public Task<string> Lookup(string message)
+    public async Task<WordModel> Lookup(string profanity)
     {
-        throw new NotImplementedException();
+        var word = await _dbContext.Words.Find(x => x.Word == profanity).FirstOrDefaultAsync();
+        
+        return word?.ToModel();
     }
 
-    public Task<bool> AddWord(string word)
+    public async Task<bool> AddWord(WordModel word)
     {
-        throw new NotImplementedException();
+        var wordEntity = word.ToDbModel();
+        try
+        {
+            await _dbContext.Words.InsertOneAsync(wordEntity);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    public Task<bool> DeleteWord(int id)
+    public async Task<bool> DeleteWord(string word)
     {
-        throw new NotImplementedException();
+        var result = await _dbContext.Words.DeleteOneAsync(x => x.Word == word);
+        return result.DeletedCount > 0;
     }
 }

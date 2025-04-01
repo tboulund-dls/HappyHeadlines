@@ -9,7 +9,6 @@ public static class WordMapper
     {
         return new WordDbModel
         {
-            Id = model.Id.Value,
             Word = model.Word
         };
     }
@@ -18,7 +17,6 @@ public static class WordMapper
     {
         return new WordModel
         {
-            Id = new WordId(model.Id),
             Word = model.Word
         };
     }

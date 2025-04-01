@@ -1,6 +1,6 @@
 ﻿namespace DraftService.Repository;
 
-public class DraftRepository
+public class DraftRepository : IDraftRepository
 {
     
 }

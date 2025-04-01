@@ -1,6 +1,6 @@
 ﻿using DraftService.Models;
 using DraftService.Models.Dtos;
-using DraftService.Service;
+using DraftService.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DraftService.Controller;
@@ -9,11 +9,11 @@ namespace DraftService.Controller;
 [ApiController]
 public class DraftController : ControllerBase
 {
-    private readonly IDraftService _draftService;
+    private readonly IDraftRepository _draftRepository;
 
-    public DraftController(IDraftService draftService)
+    public DraftController(IDraftRepository draftService)
     {
-        _draftService = draftService;
+        _draftRepository = draftService;
     }
     
     /**
@@ -24,7 +24,9 @@ public class DraftController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<DraftDto> Get(int id)
     {
-        return Ok(_draftService.GetDraft(id));
+        //return Ok(_draftRepository.GetDraft(id));
+
+        return NotFound();
     }
 
     /**
@@ -37,9 +39,10 @@ public class DraftController : ControllerBase
     {
         try
         {
-            var result = _draftService.CreateDraft(draft);
-            
-            return new CreatedResult($"/draft/{result.Id}", result);
+            //var result = _draftRepository.CreateDraft(draft);
+
+            //return new CreatedResult($"/draft/{result.Id}", result);
+            return NotFound();
         }
         catch (Exception exception)
         {

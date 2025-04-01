@@ -1,0 +1,30 @@
+type: http_request
+model: http_request
+id: rq_txSNHNdEdL
+createdAt: 2025-04-01T11:13:17.270038100
+updatedAt: 2025-04-01T11:16:36.566207300
+workspaceId: wk_cUivN8efQf
+folderId: fl_6PYNHdkJEg
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: GetCommenstForArticle
+sortPriority: 2000.0
+url: http://localhost:5261/api/v1/comments/fe1457d1-954b-4aee-8a00-cf4bcf2db66b
+urlParameters:
+- enabled: true
+  name: page
+  value: '1'
+  id: 8EzwQtBIBY
+- enabled: true
+  name: pageSize
+  value: '50'
+  id: DpfQwGQShb
+- enabled: true
+  name: ''
+  value: ''
+  id: 90ksrMvtCQ

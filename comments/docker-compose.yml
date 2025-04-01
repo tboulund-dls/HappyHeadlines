@@ -1,0 +1,55 @@
+services:
+  comments:
+    image: comments
+    build:
+      context: ../
+      dockerfile: comments/src/Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - happy-headlines-network
+  postgres:
+    image: postgres:latest
+    hostname: happy-headlines-db
+    container_name: happy-headlines-db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-comments}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - happy-headlines-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-comments}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  flyway:
+    image: flyway/flyway:latest
+    container_name: happy-headlines-flyway
+    command: migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./sql:/flyway/sql
+    environment:
+      FLYWAY_URL: jdbc:postgresql://happy-headlines-db:${DB_PORT:-5432}/${DB_NAME:-comments}
+      FLYWAY_USER: ${DB_USER:-postgres}
+      FLYWAY_PASSWORD: ${DB_PASSWORD:-postgres}
+      FLYWAY_SCHEMAS: public
+      FLYWAY_CONNECT_RETRIES: 50
+    networks:
+      - happy-headlines-network
+
+volumes:
+  postgres_data:
+networks:
+  happy-headlines-network:
+    driver: bridge
+    external: true

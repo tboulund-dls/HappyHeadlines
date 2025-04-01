@@ -428,10 +428,82 @@
         },
         "tags" : "Element,Container,Queue,OrangeSquad"
       }, {
+        "components" : [ {
+          "description" : "Handles HTTP requests related to comments.",
+          "documentation" : { },
+          "id" : "36",
+          "name" : "CommentController",
+          "properties" : {
+            "structurizr.dsl.identifier" : "hh.commentservice.commentcontroller"
+          },
+          "relationships" : [ {
+            "description" : "Delegates logic",
+            "destinationId" : "37",
+            "id" : "41",
+            "sourceId" : "36",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles comment operations: CRUD + profanity filtering",
+          "documentation" : { },
+          "id" : "37",
+          "name" : "CommentServiceLogic",
+          "properties" : {
+            "structurizr.dsl.identifier" : "hh.commentservice.commentservicelogic"
+          },
+          "relationships" : [ {
+            "description" : "Filters comment",
+            "destinationId" : "40",
+            "id" : "42",
+            "sourceId" : "37",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Reads/writes comments",
+            "destinationId" : "38",
+            "id" : "43",
+            "sourceId" : "37",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Resolves authors",
+            "destinationId" : "39",
+            "id" : "44",
+            "sourceId" : "37",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles comment persistence",
+          "documentation" : { },
+          "id" : "38",
+          "name" : "CommentRepository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "hh.commentservice.commentrepository"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles author caching",
+          "documentation" : { },
+          "id" : "39",
+          "name" : "AuthorRepository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "hh.commentservice.authorrepository"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "description" : "External profanity check client",
+          "documentation" : { },
+          "id" : "40",
+          "name" : "ProfanityServiceClient",
+          "properties" : {
+            "structurizr.dsl.identifier" : "hh.commentservice.profanityserviceclient"
+          },
+          "tags" : "Element,Component"
+        } ],
         "description" : "Responsible for handling comments on articles.",
         "documentation" : {
           "sections" : [ {
-            "content" : "<!-- Account for the REST-endpoints of your API here -->",
+            "content" : "# Comment Service API\n\nThe CommentService is responsible for handling article comments, including fetching, posting, and moderating comments. It integrates with the ProfanityService to filter inappropriate content.\n\n## Models\n### Shared Models\n#### CommentDTO\n```json\n{\n  \"id\": \"string\",\n  \"articleId\": \"string\",\n  \"content\": \"string\",\n  \"authorId\": \"string\",\n  \"authorName\":\"string\",\n  \"createdAt\": \"datetime\",\n  \"updatedAt\": \"datetime\"\n}\n```\nUsed for returning comment data to clients in API responses.\n\n#### NewCommentDTO\n```json\n{\n  \"articleId\": \"string\",\n  \"content\": \"string\",\n  \"author\": \"string\"\n}\n```\nUsed when submitting a new comment to be created.\n\n#### UpdateCommentDTO\n```json\n{\n  \"content\": \"string\",\n}\n```\nUsed when updating an existing comment.\n\n### Internal Models\n#### Comment\n```json\n{\n  \"id\": \"string\",\n  \"articleId\": \"string\",\n  \"content\": \"string\",\n  \"authorId\":\"string\",\n  \"authorName\":\"string\",\n  \"createdAt\": \"datetime\",\n  \"updatedAt\": \"datetime\"\n}\n\n```\n\n## Endpoints\n\n### Get Comments\n\n#### Get Comments for Article\n```\nGET /api/v1/comments/{articleId}?page=1&pageSize=1\n```\n\n**Description:** Retrieves all comments for a specific article.\n\n**Parameters:**\n- `articleId` (path): ID of the article to get comments for\n- `page` (query, optional): Page number for pagination\n- `pageSize` (query, optional): Number of comments per page\n\n**Response:**\n```json\n{\n  \"comments\": [\n    {\n      \"id\": \"string\",\n      \"articleId\": \"string\",\n      \"content\": \"string\",\n      \"authorId\": \"string\",\n      \"authorName\":\"string\",\n      \"createdAt\": \"datetime\",\n      \"updatedAt\": \"datetime\"\n    }\n  ],\n  \"totalComments\": \"number\",\n  \"page\": \"number\",\n  \"pageSize\": \"number\"\n}\n```\n\n### Post Comment\n\n```\nPOST /api/v1/comments/{articleId}\n```\n\n**Description:** Posts a new comment on an article. The service will automatically filter profanity by calling the ProfanityService.\n\n**Parameters:**\n- `articleId` (path): ID of the article to comment on\n\n**Request Body:**\n```json\n{\n    \"articleId\": \"string\",\n    \"content\": \"string\",\n    \"author\": \"string\",\n}\n```\n\n**Response:**\n```json\n{\n  \"id\": \"string\",\n  \"articleId\": \"string\",\n  \"content\": \"string\",\n  \"authorId\": \"string\",\n  \"createdAt\": \"datetime\"\n}\n```\n\n### Get Single Comment\n\n```\nGET /api/v1/comments/{commentId}\n```\n\n**Description:** Retrieves a specific comment by ID.\n\n**Parameters:**\n- `commentId` (path): ID of the comment to retrieve\n\n**Response:**\n```json\n{\n  \"id\": \"string\",\n  \"articleId\": \"string\",\n  \"content\": \"string\",\n  \"author\": \"string\",\n  \"createdAt\": \"datetime\",\n  \"updatedAt\": \"datetime\"\n}\n```\n\n### Update Comment\n\n```\nPUT /api/v1/comments/{commentId}\n```\n\n**Description:** Updates an existing comment.\n\n**Parameters:**\n- `commentId` (path): ID of the comment to update\n\n**Request Body:**\n```json\n{\n  \"id\": \"string\",\n  \"articleId\": \"string\",\n  \"content\": \"string\",\n  \"author\": \"string\",\n  \"status\": \"pending|approved|rejected\"\n}\n```\n\n**Response:**\n```json\n{\n  \"id\": \"string\",\n  \"articleId\": \"string\",\n  \"content\": \"string\",\n  \"authorId\": \"string\",\n  \"status\": \"pending|approved|rejected\",\n  \"createdAt\": \"datetime\",\n  \"updatedAt\": \"datetime\"\n}\n```\n\n### Delete Comment\n\n```\nDELETE /api/v1/comments/{commentId}\n```\n\n**Description:** Deletes a specific comment by ID.\n\n**Parameters:**\n- `commentId` (path): ID of the comment to delete\n\n**Response:**\n```\n204 No Content\n```\n\n## Error Responses\n\nAll endpoints may return the following error responses:\n\n- `400 Bad Request`: Invalid input parameters\n- `404 Not Found`: Resource not found\n- `500 Internal Server Error`: Server-side error",
             "format" : "Markdown",
             "order" : 1,
             "title" : ""
@@ -467,7 +539,7 @@
         "description" : "Stores all comments that are posted on articles.",
         "documentation" : {
           "sections" : [ {
-            "content" : "<!-- Create a database schema of the database and display it here -->",
+            "content" : "# Comment Service Database Schema\n\n## Comments Table\n\n```sql\n-- Comments table stores all user comments for articles\nCREATE TABLE comments (\n    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n    content TEXT NOT NULL,\n    articleId UUID NOT NULL, -- Reference to article in Articles service\n    authorId UUID NOT NULL,  -- Reference to user in Auth service\n    authorName VARCHAR(255) NOT NULL, -- Denormalized for display without querying User service\n    createdAt TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\n    updatedAt TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n);\n\n-- Indexes for better query performance\nCREATE INDEX idx_comments_articleId ON comments(articleId);\nCREATE INDEX idx_comments_authorId ON comments(authorId);\nCREATE INDEX idx_comments_createdAt ON comments(createdAt);\n```\n\n## Authors Table\n\n```sql\n-- Minimal authors table for the Comment service\n-- Only stores essential author information for this service's operation\n-- The authoritative source for author data remains in the User/Auth service\nCREATE TABLE authors (\n    id UUID PRIMARY KEY, -- Same ID as used in the Auth service\n    name VARCHAR(255) NOT NULL\n\n-- Index for faster lookups\nCREATE INDEX idx_authors_name ON authors(name);\n```\n\nThe Authors table allows the Comment service to:\n1. Cache basic author information locally\n2. Function independently if the User/Auth service is temporarily unavailable\n3. Perform joins for queries without cross-service calls\n",
             "format" : "Markdown",
             "order" : 1,
             "title" : ""
@@ -950,7 +1022,7 @@
       "order" : 3
     }, {
       "automaticLayout" : {
-        "applied" : false,
+        "applied" : true,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -982,7 +1054,7 @@
       } ]
     }, {
       "automaticLayout" : {
-        "applied" : false,
+        "applied" : true,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -993,7 +1065,16 @@
       "containerId" : "40",
       "externalContainerBoundariesVisible" : false,
       "key" : "CommentService",
-      "order" : 5
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "41"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "44"
+      } ]
     }, {
       "automaticLayout" : {
         "applied" : false,
@@ -1172,7 +1253,7 @@
       } ]
     }, {
       "automaticLayout" : {
-        "applied" : false,
+        "applied" : true,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,

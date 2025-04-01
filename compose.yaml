@@ -1,5 +1,4 @@
 services:
-
   test:
     image: ghcr.io/tboulund-dls/happy-headlines-demo:latest
     build:
@@ -67,9 +66,69 @@ services:
       - "8081:8080"
     depends_on:
       - rabbitmq
+      
+  comments:
+    image: comments
+    container_name: comments
+    depends_on:
+      comments-db:
+        condition: service_healthy
+      comments-flyway:
+        condition: service_completed_successfully
+    build:
+      context: .
+      dockerfile: comments/src/Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - happy-headlines-network
+  comments-db:
+    image: postgres:latest
+    hostname: comments-db
+    container_name: comments-db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-comments}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - happy-headlines-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-comments}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  comments-flyway:
+    image: flyway/flyway:latest
+    container_name: comments-flyway
+    command: migrate
+    depends_on:
+      comments-db:
+        condition: service_healthy
+    volumes:
+      - ./comments/sql:/flyway/sql
+    environment:
+      FLYWAY_URL: jdbc:postgresql://comments-db:${DB_PORT:-5432}/${DB_NAME:-comments}
+      FLYWAY_USER: ${DB_USER:-postgres}
+      FLYWAY_PASSWORD: ${DB_PASSWORD:-postgres}
+      FLYWAY_SCHEMAS: public
+      FLYWAY_CONNECT_RETRIES: 50
+    networks:
+      - happy-headlines-network
+
 
   
 volumes:
   mailpit-data:
   rabbitmq-data:
   featurehub-h2-data:
+  postgres_data:
+
+networks:
+  happy-headlines-network:
+    driver: bridge

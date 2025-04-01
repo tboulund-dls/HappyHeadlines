@@ -76,7 +76,6 @@ GET /api/v1/comments/{articleId}?page=1&pageSize=1
       "articleId": "string",
       "content": "string",
       "authorId": "string",
-      "authorName":"string",
       "createdAt": "datetime",
       "updatedAt": "datetime"
     }
@@ -135,7 +134,7 @@ GET /api/v1/comments/{commentId}
   "id": "string",
   "articleId": "string",
   "content": "string",
-  "author": "string",
+  "authorId": "string",
   "createdAt": "datetime",
   "updatedAt": "datetime"
 }
@@ -158,8 +157,7 @@ PUT /api/v1/comments/{commentId}
   "id": "string",
   "articleId": "string",
   "content": "string",
-  "author": "string",
-  "status": "pending|approved|rejected"
+  "authorId": "string"
 }
 ```
 
@@ -170,7 +168,6 @@ PUT /api/v1/comments/{commentId}
   "articleId": "string",
   "content": "string",
   "authorId": "string",
-  "status": "pending|approved|rejected",
   "createdAt": "datetime",
   "updatedAt": "datetime"
 }

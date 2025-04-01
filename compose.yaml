@@ -46,10 +46,16 @@ services:
       - featurehub-h2-data:/db
     ports:
       - 8085:8085
-  comments-service:
+  comments:
     image: comments
+    container_name: comments
+    depends_on:
+      comments-db:
+        condition: service_healthy
+      comments-flyway:
+        condition: service_completed_successfully
     build:
-      context: ../
+      context: .
       dockerfile: comments/src/Dockerfile
     ports:
       - 8080:8080

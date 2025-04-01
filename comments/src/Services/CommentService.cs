@@ -47,13 +47,12 @@ namespace HappyHeadlines.Comments.Services
 
         public async Task<CommentDTO> CreateCommentAsync(NewCommentDTO commentDto)
         {
+            
             var comment = new Comment
             {
                 ArticleId = commentDto.ArticleId,
                 Content = commentDto.Content,
-                AuthorName = commentDto.Author,
-                // In a real implementation, you would get the AuthorId from authentication
-                AuthorId = Guid.NewGuid() // Placeholder
+                AuthorId = commentDto.AuthorId // Placeholder
             };
 
             var createdComment = await _repository.CreateCommentAsync(comment);

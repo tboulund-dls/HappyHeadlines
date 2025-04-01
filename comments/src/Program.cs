@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Build connection string from environment variables to match docker-compose settings
 var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "postgres";
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "postgres";
-var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "happyheadlines";
+var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "comments";
 var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
 var dbHost = Environment.GetEnvironmentVariable("DB_HOST") ?? 
     (builder.Environment.IsDevelopment() ? "localhost" : "comments-db");

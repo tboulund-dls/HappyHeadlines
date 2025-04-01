@@ -1,5 +1,4 @@
 using article_publisher.api.Models;
-
 namespace article_publisher.api.Services;
 
 public class PublisherService
@@ -19,6 +18,7 @@ public class PublisherService
     public void SaveDraft(Draft draft)
     {
         _drafts.Add(draft);
+        _articleQueueService.PublishDraftSaved(draft);
     }
 
      // converts a draft to an article
@@ -36,7 +36,7 @@ public class PublisherService
         };
 
         _articles.Add(article); //add the article to the list of published articles
-        _articleQueueService.Enqueue(article); //add the article to the queue
+       _articleQueueService.PublishArticlePublished(article);
         return article;
     }
     public bool DeleteDraft(string draftId)
@@ -45,6 +45,7 @@ public class PublisherService
         if (draft == null) return false;
 
         _drafts.Remove(draft);
+        _articleQueueService.PublishArticleDeleted(draftId);
         return true;
     }
 
@@ -56,7 +57,8 @@ public class PublisherService
         existing.Title = updatedDraft.Title;
         existing.Content = updatedDraft.Content;
         existing.Author = updatedDraft.Author;
-
+        
+        _articleQueueService.PublishDraftUpdated(existing);
         return existing;
     }
 
@@ -80,6 +82,7 @@ public class PublisherService
         if (article == null) return false;
 
         _articles.Remove(article);
+        _articleQueueService.PublishArticleDeleted(articleId);
         return true;
     }
 
@@ -92,7 +95,8 @@ public class PublisherService
         existing.Content = updatedArticle.Content;
         existing.Author = updatedArticle.Author;
         existing.PublishedAt = DateTime.UtcNow;
-
+        
+        _articleQueueService.PublishArticleUpdated(existing);
         return existing;
     }
 

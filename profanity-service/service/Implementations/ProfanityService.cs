@@ -14,12 +14,12 @@ public class ProfanityService : IService
 
     public async Task<IEnumerable<string>> getWords()
     {
-        return await _repository.getWords();
+        return await _repository.GetWords();
     }
 
     public async Task<string> Clean(string message)
     {
-        return await _repository.Clean(message);
+        throw new NotImplementedException();
     }
 
     public async Task<bool> AddWord(string word)

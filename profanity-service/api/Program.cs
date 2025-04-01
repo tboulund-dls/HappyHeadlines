@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddScoped<IRepository, BaseRepository>();
+builder.Services.AddScoped<IRepository, MongoDbRepository>();
 builder.Services.AddScoped<IService, ProfanityService>();
 
 builder.Services.AddControllers();

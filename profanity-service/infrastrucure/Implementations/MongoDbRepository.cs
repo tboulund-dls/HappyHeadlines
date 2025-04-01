@@ -2,14 +2,14 @@
 
 namespace infrastrucure.implementations;
 
-public class BaseRepository : IRepository
+public class MongoDbRepository : IRepository
 {
-    public Task<IEnumerable<string>> getWords()
+    public Task<IEnumerable<string>> GetWords()
     {
         throw new NotImplementedException();
     }
 
-    public Task<string> Clean(string message)
+    public Task<string> Lookup(string message)
     {
         throw new NotImplementedException();
     }

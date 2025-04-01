@@ -1,4 +1,6 @@
-﻿using SubscriberService.Infrastructure.Repositories;
+﻿using SubscriberService.Domain.Dtos;
+using SubscriberService.Domain.Exceptions;
+using SubscriberService.Infrastructure.Repositories;
 using SubscriberService.Models;
 
 namespace SubscriberService.Application.Services;
@@ -10,7 +12,7 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
         var subscriptionTypeEntity = await subscriptionTypeRepository.GetSubscriptionTypeByNameAsync(subscriptionType);
         if (subscriptionTypeEntity == null)
         {
-            throw new Exception("Subscription type not found");
+            throw new NotFoundException("Subscription type not found");
         }
         
         var subscribers = await subscriberRepository.GetSubscribersForSubscriptionTypeAsync(subscriptionTypeEntity);
@@ -36,10 +38,16 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
             await subscriberRepository.CreateSubscriberAsync(subscriber);
         }
         
+        var subscriptionTypeEntity = await subscriptionTypeRepository.GetSubscriptionTypeByNameAsync(createSubscriptionDto.SubscriptionType);
+        if (subscriptionTypeEntity == null)
+        {
+            throw new NotFoundException("Subscription type not found");
+        }
+        
         var subscription = new Subscription
         {
             Id = Guid.NewGuid(),
-            TypeId = createSubscriptionDto.SubscriptionType,
+            SubscriptionTypeId = subscriptionTypeEntity.Id,
             SubscriberId = subscriber.Id
         };
 
@@ -52,7 +60,7 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
         var subscription = await subscriptionRepository.GetSubscriptionByIdAsync(subscriptionId);
         if (subscription == null)
         {
-            throw new Exception("Subscription not found");
+            throw new NotFoundException("Subscription not found");
         }
         
         await subscriptionRepository.UnsubscribeAsync(subscription);

@@ -20,7 +20,7 @@ public class SubscriptionRepository(AppDbContext dbContext) : ISubscriptionRepos
     {
         return await dbContext.Subscriptions
             .Include(s => s.Subscriber)
-            .Include(t => t.Type)
+            .Include(t => t.SubscriptionType)
             .FirstOrDefaultAsync(s => s.Id == subscriptionId);
     }
 

@@ -6,7 +6,7 @@ namespace SubscriberService.Infrastructure.Data;
 public class AppDbContext : DbContext
 {
     public virtual DbSet<Subscriber> Subscribers { get; set; } = default!;
-    public virtual DbSet<SubscriberType> SubscriberTypes { get; set; } = default!;
+    public virtual DbSet<SubscriptionType> SubscriberTypes { get; set; } = default!;
     public virtual DbSet<Subscription> Subscriptions { get; set; } = default!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -33,13 +33,13 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<SubscriberType>()
-            .HasData(new SubscriberType
+        modelBuilder.Entity<SubscriptionType>()
+            .HasData(new SubscriptionType
                 {
                     Id = Guid.Parse("3cbad589-81b4-49c8-a48a-1cee835ea267"),
                     Type = "DAILY"
                 },
-                new SubscriberType
+                new SubscriptionType
                 {
                     Id = Guid.Parse("9a24ad3e-4e3d-4f9b-953d-4c2b4f45abaa"),
                     Type = "NEWSSTREAM"

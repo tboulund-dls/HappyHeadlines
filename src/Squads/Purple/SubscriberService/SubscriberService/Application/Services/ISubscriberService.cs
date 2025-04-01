@@ -1,4 +1,5 @@
-﻿using SubscriberService.Models;
+﻿using SubscriberService.Domain.Dtos;
+using SubscriberService.Models;
 
 namespace SubscriberService.Application.Services;
 

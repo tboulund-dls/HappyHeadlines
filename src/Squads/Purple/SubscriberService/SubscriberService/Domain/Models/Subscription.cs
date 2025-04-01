@@ -5,6 +5,6 @@ public class Subscription
     public Guid Id { get; set; }
     public Guid SubscriberId { get; set; }
     public Subscriber? Subscriber { get; set; }
-    public Guid TypeId { get; set; }
-    public SubscriberType? Type { get; set; }
+    public Guid SubscriptionTypeId { get; set; }
+    public SubscriptionType? SubscriptionType { get; set; }
 }

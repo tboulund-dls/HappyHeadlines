@@ -4,5 +4,5 @@ namespace SubscriberService.Infrastructure.Repositories;
 
 public interface ISubscriptionTypeRepository
 {
-    Task<SubscriberType?> GetSubscriptionTypeByNameAsync(string name);
+    Task<SubscriptionType?> GetSubscriptionTypeByNameAsync(string name);
 }

@@ -6,12 +6,12 @@ namespace SubscriberService.Infrastructure.Repositories;
 
 public class SubscriberRepository(AppDbContext dbContext) : ISubscriberRepository
 {
-    public async Task<IEnumerable<Subscriber>> GetSubscribersForSubscriptionTypeAsync(SubscriberType subscriberType)
+    public async Task<IEnumerable<Subscriber>> GetSubscribersForSubscriptionTypeAsync(SubscriptionType subscriptionType)
     {
         return await dbContext.Subscriptions
             .Include(s => s.Subscriber)
-            .Include(t => t.Type)
-            .Where(s => s.TypeId == subscriberType.Id)
+            .Include(t => t.SubscriptionType)
+            .Where(s => s.SubscriptionTypeId == subscriptionType.Id)
             .Select(s => s.Subscriber!)
             .ToListAsync();
     }

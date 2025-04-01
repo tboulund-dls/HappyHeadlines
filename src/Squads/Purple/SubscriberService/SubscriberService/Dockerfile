@@ -7,10 +7,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["SubscriberService/SubscriberService.csproj", "SubscriberService/"]
-RUN dotnet restore "SubscriberService/SubscriberService.csproj"
+COPY ["SubscriberService.csproj", "."]
+RUN dotnet restore "SubscriberService.csproj"
 COPY . .
-WORKDIR "/src/SubscriberService"
+WORKDIR "/src"
 RUN dotnet build "SubscriberService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

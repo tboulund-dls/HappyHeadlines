@@ -30,4 +30,21 @@ public class AppDbContext : DbContext
         
         options.UseSqlite($"Data Source={dbPath}");
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<SubscriberType>()
+            .HasData(new SubscriberType
+                {
+                    Id = Guid.Parse("3cbad589-81b4-49c8-a48a-1cee835ea267"),
+                    Type = "DAILY"
+                },
+                new SubscriberType
+                {
+                    Id = Guid.Parse("9a24ad3e-4e3d-4f9b-953d-4c2b4f45abaa"),
+                    Type = "NEWSSTREAM"
+                });
+        
+        base.OnModelCreating(modelBuilder);
+    }
 }

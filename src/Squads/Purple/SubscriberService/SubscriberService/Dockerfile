@@ -2,15 +2,18 @@
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["SubscriberService.csproj", "."]
-RUN dotnet restore "SubscriberService.csproj"
-COPY . .
-WORKDIR "/src"
+WORKDIR /root
+COPY ["src/Squads/Purple/SubscriberService/SubscriberService/SubscriberService.csproj", "src/Squads/Purple/SubscriberService/SubscriberService/"]
+COPY ["SharedModels/SharedModels.csproj", "SharedModels/"]
+
+RUN dotnet restore "src/Squads/Purple/SubscriberService/SubscriberService/SubscriberService.csproj"
+COPY ["src/Squads/Purple/SubscriberService/SubscriberService/", "src/Squads/Purple/SubscriberService/SubscriberService/"]
+COPY ["SharedModels/", "SharedModels/"]
+
+WORKDIR "/root/src/Squads/Purple/SubscriberService/SubscriberService"
 RUN dotnet build "SubscriberService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

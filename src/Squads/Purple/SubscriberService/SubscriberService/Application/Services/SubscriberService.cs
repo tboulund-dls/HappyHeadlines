@@ -1,11 +1,17 @@
-﻿using SubscriberService.Domain.Dtos;
+﻿using MassTransit;
+using SubscriberService.Domain.Dtos;
 using SubscriberService.Domain.Exceptions;
 using SubscriberService.Infrastructure.Repositories;
 using SubscriberService.Models;
 
 namespace SubscriberService.Application.Services;
 
-public class SubscriberService(ISubscriberRepository subscriberRepository, ISubscriptionRepository subscriptionRepository, ISubscriptionTypeRepository subscriptionTypeRepository) : ISubscriberService
+public class SubscriberService(
+    ISubscriberRepository subscriberRepository,
+    ISubscriptionRepository subscriptionRepository,
+    ISubscriptionTypeRepository subscriptionTypeRepository,
+    IPublishEndpoint publishEndpoint
+) : ISubscriberService
 {
     public async Task<List<Subscriber>> GetSubscribersForSubscriptionTypeAsync(string subscriptionType)
     {
@@ -14,7 +20,7 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
         {
             throw new NotFoundException("Subscription type not found");
         }
-        
+
         var subscribers = await subscriberRepository.GetSubscribersForSubscriptionTypeAsync(subscriptionTypeEntity);
         return subscribers.ToList();
     }
@@ -37,13 +43,14 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
             };
             await subscriberRepository.CreateSubscriberAsync(subscriber);
         }
-        
-        var subscriptionTypeEntity = await subscriptionTypeRepository.GetSubscriptionTypeByNameAsync(createSubscriptionDto.SubscriptionType);
+
+        var subscriptionTypeEntity =
+            await subscriptionTypeRepository.GetSubscriptionTypeByNameAsync(createSubscriptionDto.SubscriptionType);
         if (subscriptionTypeEntity == null)
         {
             throw new NotFoundException("Subscription type not found");
         }
-        
+
         var subscription = new Subscription
         {
             Id = Guid.NewGuid(),
@@ -52,6 +59,13 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
         };
 
         var result = await subscriptionRepository.SubscribeAsync(subscription);
+        
+        await publishEndpoint.Publish(new SubscriptionCreatedEvent
+        {
+            Email = subscriber.Email,
+            SubscriptionType = subscriptionTypeEntity.Type,
+        });
+        
         return result;
     }
 
@@ -62,10 +76,11 @@ public class SubscriberService(ISubscriberRepository subscriberRepository, ISubs
         {
             throw new NotFoundException("Subscription not found");
         }
-        
+
         await subscriptionRepository.UnsubscribeAsync(subscription);
 
-        var remainingSubscriptions = await subscriptionRepository.GetSubscriptionsByEmailAsync(subscription.Subscriber!.Email);
+        var remainingSubscriptions =
+            await subscriptionRepository.GetSubscriptionsByEmailAsync(subscription.Subscriber!.Email);
         if (!remainingSubscriptions.Any())
         {
             await subscriberRepository.DeleteSubscriberAsync(subscription.Subscriber);

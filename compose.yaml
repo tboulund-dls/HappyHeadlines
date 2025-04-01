@@ -58,10 +58,10 @@ services:
       - 8085:8085
   
   subscriber-service:
-    image: subscriber-service
+    image: ghcr.io/tboulund-dls/happy-headlines-subscriber-service:latest
     build:
-      context: src/Squads/Purple/SubscriberService/SubscriberService
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: src/Squads/Purple/SubscriberService/SubscriberService/Dockerfile
     ports:
       - "8081:8080"
     depends_on:

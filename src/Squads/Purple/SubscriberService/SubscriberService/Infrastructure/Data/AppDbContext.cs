@@ -10,5 +10,24 @@ public class AppDbContext : DbContext
     public virtual DbSet<Subscription> Subscriptions { get; set; } = default!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source=Subscribers.db");
+    {
+        // Get path from environment variable with fallback paths
+        var dbPath = Environment.GetEnvironmentVariable("DB_PATH");
+        
+        if (string.IsNullOrEmpty(dbPath))
+        {
+            // For Docker environment
+            if (Directory.Exists("/data"))
+            {
+                dbPath = "/data/Subscribers.db";
+            }
+            // For local development
+            else
+            {
+                dbPath = "Subscribers.db"; // Local relative path
+            }
+        }
+        
+        options.UseSqlite($"Data Source={dbPath}");
+    }
 }

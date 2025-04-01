@@ -62,8 +62,10 @@ services:
     build:
       context: .
       dockerfile: src/Squads/Purple/SubscriberService/SubscriberService/Dockerfile
-    ports:
-      - "8081:8080"
+    environment:
+      RabbitMQ__Host: ${RABBITMQ_HOST}
+      RABBITMQ__Username: ${RABBITMQ_USERNAME}
+      RABBITMQ__Password: ${RABBITMQ_PASSWORD}
     depends_on:
       - rabbitmq
       

@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using SharedModels;
 using SubscriberService.Domain.Dtos;
 using SubscriberService.Domain.Exceptions;
 using SubscriberService.Infrastructure.Repositories;
@@ -49,6 +50,12 @@ public class SubscriberService(
         if (subscriptionTypeEntity == null)
         {
             throw new NotFoundException("Subscription type not found");
+        }
+
+        if (await subscriptionRepository.DoesUserAlreadyHaveSubscriptionAsync(createSubscriptionDto.Email,
+                createSubscriptionDto.SubscriptionType))
+        {
+            throw new BadRequestException("User already has this subscription");
         }
 
         var subscription = new Subscription

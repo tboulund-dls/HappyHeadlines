@@ -23,6 +23,14 @@ public class SubscriptionRepository(AppDbContext dbContext) : ISubscriptionRepos
             .Include(t => t.SubscriptionType)
             .FirstOrDefaultAsync(s => s.Id == subscriptionId);
     }
+    
+    public async Task<bool> DoesUserAlreadyHaveSubscriptionAsync(string email, string subscriptionType)
+    {
+        return await dbContext.Subscriptions
+            .Include(s => s.Subscriber)
+            .Include(t => t.SubscriptionType)
+            .AnyAsync(s => s.Subscriber!.Email == email && s.SubscriptionType!.Type == subscriptionType);
+    }
 
     public async Task<Subscription> SubscribeAsync(Subscription subscription)
     {

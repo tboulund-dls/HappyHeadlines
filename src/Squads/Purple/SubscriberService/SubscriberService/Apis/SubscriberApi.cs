@@ -68,6 +68,10 @@ public static class SubscriberApi
         {
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status404NotFound);
         }
+        catch (BadRequestException e)
+        {
+            return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status400BadRequest);
+        } 
         catch (Exception e)
         {
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status500InternalServerError);

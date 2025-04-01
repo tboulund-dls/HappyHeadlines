@@ -8,4 +8,5 @@ public interface ISubscriptionRepository
     Task<Subscription?> GetSubscriptionByIdAsync(Guid subscriptionId);
     Task<Subscription> SubscribeAsync(Subscription subscription);
     Task UnsubscribeAsync(Subscription subscription);
+    Task<bool> DoesUserAlreadyHaveSubscriptionAsync(string email, string subscriptionType);
 }

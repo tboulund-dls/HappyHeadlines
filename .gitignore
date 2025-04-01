@@ -1,5 +1,7 @@
 .env
 .vscode/
+**/.idea
+
 # Created by https://www.toptal.com/developers/gitignore/api/dotnetcore,macos,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=dotnetcore,macos,visualstudiocode
 

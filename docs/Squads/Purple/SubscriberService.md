@@ -60,11 +60,11 @@ DELETE /api/v1/subscribe?email={email}
 
 #### Query Parameters
 
-| Name  | Required | Type   | Description                  |
-|-------|----------|--------|------------------------------|
-| email | Yes      | string | Email of the subscriber      |
+| Name           | Required | Type | Description            |
+|----------------|----------|------|------------------------|
+| subscriptionId | Yes      | guid | Id of the subscription |
 
 **Example:**
 ```
-DELETE /api/v1/subscribe?email=user@example.com
+DELETE /api/v1/subscribe/{subscriptionId}
 ```

@@ -8,15 +8,15 @@ services:
     depends_on:
       - mailpit
 
-  draftservice:
-    build:
-      context: DraftService
-      dockerfile: DOCKERFILE
-    container_name: draftservice
-    ports:
-      - "5000:8080"
-    depends_on:
-      - rabbitmq
+  # draftservice:
+    # build:
+      # context: DraftService
+      # dockerfile: DOCKERFILE
+    # container_name: draftservice
+    # ports:
+      # - "5000:8080"
+    # depends_on:
+      # - rabbitmq
 
   structurizr:
     image: structurizr/lite

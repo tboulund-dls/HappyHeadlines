@@ -5,7 +5,7 @@ EXPOSE 8080
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["comments.csproj", "."]
+COPY . .
 RUN dotnet restore "comments.csproj"
 COPY . .
 RUN dotnet build "comments.csproj" -c $configuration -o /app/build

@@ -1,0 +1,23 @@
+type: http_request
+model: http_request
+id: rq_aXDsBgs9sr
+createdAt: 2025-04-01T09:01:02.909117100
+updatedAt: 2025-04-01T09:08:57.617347500
+workspaceId: wk_cUivN8efQf
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: "{\r\n  \"content\": \"\"\r\n}"
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: null
+method: PUT
+name: UdpateComment
+sortPriority: 0.0
+url: http://localhost:5261/api/v1/comments/{commentId}
+urlParameters: []

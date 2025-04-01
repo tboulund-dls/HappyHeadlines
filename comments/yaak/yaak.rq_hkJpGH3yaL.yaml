@@ -1,0 +1,28 @@
+type: http_request
+model: http_request
+id: rq_hkJpGH3yaL
+createdAt: 2025-04-01T09:00:52.023427300
+updatedAt: 2025-04-01T09:25:22.061932700
+workspaceId: wk_cUivN8efQf
+folderId: null
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "articleId": ,
+      "content": "",
+      "author": ""
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: null
+method: POST
+name: PostComment
+sortPriority: 0.0
+url: http://localhost:5261/api/v1/comments/{articleId}
+urlParameters: []

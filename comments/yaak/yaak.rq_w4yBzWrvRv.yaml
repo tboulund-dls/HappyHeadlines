@@ -1,0 +1,22 @@
+type: http_request
+model: http_request
+id: rq_w4yBzWrvRv
+createdAt: 2025-04-01T09:01:07.239980100
+updatedAt: 2025-04-01T09:09:01.081938600
+workspaceId: wk_cUivN8efQf
+folderId: null
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: DELETE
+name: DeleteComment
+sortPriority: 0.0
+url: http://localhost:5261/api/v1/comments/{commentId}
+urlParameters:
+- enabled: true
+  name: ''
+  value: ''
+  id: eS7WqTy9E4

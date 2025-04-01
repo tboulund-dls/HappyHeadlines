@@ -49,6 +49,31 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq
       - ./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
 
+  profanityapi:
+    image: profanityapi
+    build:
+      context: .
+      dockerfile: profanity-service/Dockerfile
+    environment:
+      - mongoconn=random
+      - redishconn=randomredish
+    ports:
+      - "9081:8081"
+    depends_on:
+      - profanitydb
+      - profanitycache
+
+  profanitydb:
+    image: mongodb/mongodb-community-server:7.0.5-ubuntu2204
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=profanityuser
+      - MONGO_INITDB_ROOT_PASSWORD=!Profanitypass123
+    volumes:
+      - profanitydata:/var/lib/mongodb/data
+
+  profanitycache:
+    image: redis/redis-stack-server:latest
+
   featurehub:
     image: featurehub/party-server:latest
     restart: always
@@ -116,6 +141,7 @@ volumes:
   rabbitmq-data:
   featurehub-h2-data:
   postgres_data:
+  profanitydata:
 
 networks:
   happy-headlines-network:

@@ -1,0 +1,8 @@
+services:
+  comments:
+    image: comments
+    build:
+      context: .
+      dockerfile: src/Dockerfile
+    ports:
+      - 8080

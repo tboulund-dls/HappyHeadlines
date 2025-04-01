@@ -1,6 +1,0 @@
-@comments_HostAddress = http://localhost:5261
-
-GET {{comments_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

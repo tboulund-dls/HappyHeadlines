@@ -1,0 +1,10 @@
+type: workspace
+model: workspace
+id: wk_cUivN8efQf
+createdAt: 2025-04-01T08:54:33.987280100
+updatedAt: 2025-04-01T08:55:22
+name: HappyHeadlines
+description: ''
+settingValidateCertificates: true
+settingFollowRedirects: true
+settingRequestTimeout: 0

@@ -1,0 +1,28 @@
+type: http_request
+model: http_request
+id: rq_hkJpGH3yaL
+createdAt: 2025-04-01T09:00:52.023427300
+updatedAt: 2025-04-01T11:12:39.673351900
+workspaceId: wk_cUivN8efQf
+folderId: fl_SajA5R5S7f
+authentication: {}
+authenticationType: null
+body:
+  text: |-
+    {
+      "articleId": "fe1457d1-954b-4aee-8a00-cf4bcf2db66b",
+      "content": "test",
+      "authorId": "e5d25d1f-2a23-450e-93ab-b2134ab17238"
+    }
+bodyType: application/json
+description: ''
+headers:
+- enabled: true
+  name: Content-Type
+  value: application/json
+  id: null
+method: POST
+name: PostComment
+sortPriority: 750.0
+url: http://localhost:8080/api/v1/comments/fe1457d1-954b-4aee-8a00-cf4bcf2db66b
+urlParameters: []

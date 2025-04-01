@@ -1,1 +1,10 @@
-# Draw level 3 diagram of this service using DSL here.
+commentController = component "CommentController" "Handles HTTP requests related to comments."
+commentServiceLogic = component "CommentServiceLogic" "Handles comment operations: CRUD + profanity filtering"
+commentRepository = component "CommentRepository" "Handles comment persistence"
+authorRepository = component "AuthorRepository" "Handles author caching"
+profanityServiceClient = component "ProfanityServiceClient" "External profanity check client"
+
+commentController -> commentServiceLogic "Delegates logic"
+commentServiceLogic -> profanityServiceClient "Filters comment"
+commentServiceLogic -> commentRepository "Reads/writes comments"
+commentServiceLogic -> authorRepository "Resolves authors"

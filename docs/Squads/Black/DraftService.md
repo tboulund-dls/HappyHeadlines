@@ -3,41 +3,47 @@
 ## Endpoint: api/Draft
 
 
-#### To create a draft
+### To create a draft
 ```http
 POST api/Draft/
 ```
-Request Body (JSON)
+
+#### Request Body (JSON)
+```json
 {
-"title": "string",
-"content": "string",
-"author": "string"
+    "title": "string",
+    "content": "string",
+    "authorId": "string"
 }
+```
 
 
 ### To update a draft
 ```http
 PUT api/Draft/
 ```
-Request Body (JSON)
+#### Request Body (JSON)
+```json
 {
-"title": "string",
-"content": "string",
-"author": "string"
+    "id": "string",
+    "title": "string",
+    "content": "string",
+    "authorId": "string"
 }
+```
 
 
 ### To delete a draft
 ```http
-DELETE api/Draft/{UserId}
+DELETE api/Draft/{Id}
 ```
 
 ### To get a draft
 ```http
-GET api/Draft/{UserId}
+GET api/Draft/{Id}
 ```
 
-### To get all drafts
+### To get all drafts from author
 ```http
-GET api/Draft
+GET api/Draft/{authorId}
 ```

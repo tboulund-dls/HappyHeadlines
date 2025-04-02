@@ -1,13 +1,18 @@
+using DraftService.Models;
 using DraftService.Repository;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddDbContext<DraftContext>(options =>
+    options.UseInMemoryDatabase("DraftDatabase"));
+
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IDraftRepository, DraftRepository>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
-builder.Services.AddSingleton<IDraftRepository, DraftRepository>();
 
 var app = builder.Build();
 

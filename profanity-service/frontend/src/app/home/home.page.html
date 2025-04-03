@@ -15,8 +15,8 @@
           <ion-card *ngFor="let item of Words">
             <ion-card-content>
               <div class="grid-card-containerX2">
-                <div>{{ item }}</div>
-                <ion-button>Dellete</ion-button>
+                <div>{{ item.word }}</div>
+                <ion-button (click)="DeleteWord(item)">Dellete</ion-button>
               </div>
             </ion-card-content>
           </ion-card>

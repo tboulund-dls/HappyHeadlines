@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {WordModel} from "../models/WordModel";
+import {environment} from "../../environments/environment";
+import {firstValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -9,26 +13,42 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class HomePage implements OnInit{
 
-  constructor() {}
+  constructor(private http: HttpClient) {
+  }
 
-  Words: string[] = [];
+  Words: WordModel[] = [];
   WordFc: FormControl<string | null> = new FormControl("", [Validators.required, Validators.minLength(1), Validators.maxLength(255)]);
 
   ngOnInit() {
-    this.getMessages();
+    this.getMessagesMock();
   }
 
   async AddWord() {
     if (this.WordFc.value == null) return
-    const word =  this.WordFc.value;
+    let word :WordModel = {
+      word: this.WordFc.value,
+    }
+
+    await firstValueFrom(this.http.post<WordModel>(environment.baseURL+"SenndMessage", word))
+
+    this.getMessages()
     console.log(word);
   }
 
-  async DeleteWord(wordId: string) {
-    console.log(wordId);
+  async DeleteWord(wordId: WordModel) {
+    await firstValueFrom(this.http.delete(environment.baseURL + 'Profanity/' + wordId.word));
+    this.getMessages()
   }
 
+  private async getMessagesMock() {
+    this.Words = [{ word: "Item 1" },{ word: "Item 2" },{ word: "Item 3" },{ word: "Item 4" },{ word: "Item 5" },{ word: "Item 6" },{ word: "Item 7" },{ word: "Item 8" },{ word: "Item 9" },{ word: "Item 10" },{ word: "Item 11" },{ word: "Item 12" },{ word: "Item 13" },{ word: "Item 14" },{ word: "Item 15" },{ word: "Item 16" },{ word: "Item 17" },{ word: "Item 18" },{ word: "Item 19" },{ word: "Item 20" }];
+    //TODO remove before production, but its fine for testing visual
+    console.log(this.Words)
+  }
   private async getMessages() {
-    this.Words = ["item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10", "Item 11", "Item 12", "Item 13", "Item 14", "Item 15", "Item 16", "Item 17", "Item 18", "Item 19", "Item 20"];
+    const call = this.http.get<WordModel[]>(environment.baseURL + "Profanity");
+    call.subscribe((resData: WordModel[]) => {
+      this.Words = resData;
+    })
   }
 }

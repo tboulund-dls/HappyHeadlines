@@ -1,0 +1,10 @@
+
+.grid-containerX2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.grid-card-containerX2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}

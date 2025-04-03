@@ -67,8 +67,8 @@ services:
     build:
       context: .
       dockerfile: comments/src/Dockerfile
-    ports:
-      - 8080:8080
+    # ports: - you can't take 8080 as it's already taken
+    #   - 8080:8080
     networks:
       - happy-headlines-network
   comments-db:

@@ -10,15 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IProfanityServiceArgs>(services =>
 {
-    var mongoDbContext = new MongoDbContext("mongodb://localhost:27017", "ProfanityService");
-    var redisDbContext = new RedisDbContext("localhost:6379");
+    var mongoDbContext = new MongoDbContext( Environment.GetEnvironmentVariable("mongoconn"), Environment.GetEnvironmentVariable("dbname"));
+    //var redisDbContext = new RedisDbContext("localhost:6379");
     var repository = new MongoDbRepository(mongoDbContext);
-    var cache = new RedisDbRepository(redisDbContext, TimeSpan.FromHours(1));
+    //var cache = new RedisDbRepository(redisDbContext, TimeSpan.FromHours(1));
 
     return new ProfanityServiceArgs
     {
         Repository = repository,
-        CacheRepository = cache
+        //CacheRepository = cache
     };
 });
 

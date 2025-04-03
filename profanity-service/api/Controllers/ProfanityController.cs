@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using service.Interfaces;
+using service.Models;
 
 namespace api.Controllers;
 
@@ -18,7 +19,7 @@ public class ProfanityController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetWords()
     {
-        IEnumerable<string> result = await _service.getWords();
+        IEnumerable<WordModel> result = await _service.getWords();
         
         return result.Any() ? Ok(result) : BadRequest();
     }
@@ -35,9 +36,9 @@ public class ProfanityController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddWord([FromBody] string? word)
+    public async Task<IActionResult> AddWord([FromBody] WordModel? word)
     {
-        if (string.IsNullOrEmpty(word)) return BadRequest();
+        if (string.IsNullOrEmpty(word.Word)) return BadRequest();
 
         bool success = await _service.AddWord(word);
 
@@ -45,12 +46,11 @@ public class ProfanityController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("{wordId}")]
-    public async Task<IActionResult> DeleteWord([FromRoute] int wordId)
+    public async Task<IActionResult> DeleteWord([FromBody] string word)
     {
-        if (wordId <= 0) return BadRequest();
+        if (string.IsNullOrEmpty(word)) return BadRequest();
         
-        bool success = await _service.DeleteWord(wordId);
+        bool success = await _service.DeleteWord(word);
         
         return success ? Ok() : Conflict();
     }

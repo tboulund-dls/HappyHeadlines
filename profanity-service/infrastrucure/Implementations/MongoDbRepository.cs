@@ -52,13 +52,12 @@ public class MongoDbRepository : IRepository
         try
         {
             await _dbContext.Words.InsertOneAsync(wordEntity);
+            return true;
         }
         catch (Exception e)
         {
             throw new MongoException("An error occured while adding word");
         }
-
-        return true;
     }
 
     public async Task<bool> DeleteWord(string word)

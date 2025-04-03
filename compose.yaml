@@ -7,15 +7,15 @@ services:
     # depends_on:
     #   - mailpit
 
-  draftservice:
-    build:
-      context: DraftService
-      dockerfile: DOCKERFILE
-    container_name: draftservice
-    ports:
-      - "5000:8080"
-    depends_on:
-      - rabbitmq
+  # draftservice:
+    # build:
+      # context: DraftService
+      # dockerfile: DOCKERFILE
+    # container_name: draftservice
+    # ports:
+      # - "5000:8080"
+    # depends_on:
+      # - rabbitmq
 
   structurizr:
     image: structurizr/lite
@@ -56,6 +56,26 @@ services:
       - featurehub-h2-data:/db
     ports:
       - 8085:8085
+  
+  subscriber-service:
+    image: ghcr.io/tboulund-dls/happy-headlines-subscriber-service:latest
+    build:
+      context: .
+      dockerfile: src/Squads/Purple/SubscriberService/SubscriberService/Dockerfile
+    environment:
+      RabbitMQ__Host: ${RABBITMQ_HOST:-rabbitmq}
+      RabbitMQ__Username: ${RABBITMQ_USERNAME}
+      RabbitMQ__Password: ${RABBITMQ_PASSWORD}
+      Redis__ConnectionString: ${REDIS_CONNECTION_STRING:-redis:6379}
+    depends_on:
+      - rabbitmq
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+      
   comments:
     # image: comments
     container_name: comments
@@ -111,6 +131,7 @@ services:
       - happy-headlines-network
 
 
+  
 volumes:
   mailpit-data:
   rabbitmq-data:

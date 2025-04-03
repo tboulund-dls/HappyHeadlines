@@ -54,10 +54,14 @@ services:
       context: .
       dockerfile: profanity-service/Dockerfile
     environment:
-      - mongoconn=random
+      - mongoconn=mongodb://profanityuser:!Profanitypass123@profanitydb:27017/ProfanityService?authSource=admin
+      - dbname=ProfanityService
       - redishconn=randomredish
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:9000
     ports:
-      - "9081:8081"
+      - 9000:9000
+      - 9081:9001
     depends_on:
       - profanitydb
       - profanitycache
@@ -65,8 +69,10 @@ services:
   profanitydb:
     image: mongodb/mongodb-community-server:7.0.5-ubuntu2204
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=profanityuser
-      - MONGO_INITDB_ROOT_PASSWORD=!Profanitypass123
+      - MONGODB_INITDB_ROOT_USERNAME=profanityuser
+      - MONGODB_INITDB_ROOT_PASSWORD=!Profanitypass123
+    ports:
+      - 27017:27017
     volumes:
       - profanitydata:/var/lib/mongodb/data
   

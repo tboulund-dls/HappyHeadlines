@@ -57,7 +57,7 @@ services:
     ports:
       - 8085:8085
   comments:
-    image: comments
+    # image: comments
     container_name: comments
     depends_on:
       comments-db:

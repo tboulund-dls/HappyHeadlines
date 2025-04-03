@@ -1,11 +1,11 @@
 services:
-  test:
-    image: ghcr.io/tboulund-dls/happy-headlines-demo:latest
-    build:
-      context: demo
-      dockerfile: Dockerfile
-    depends_on:
-      - mailpit
+  # test:
+    # image: ghcr.io/tboulund-dls/happy-headlines-demo:latest
+    # build:
+    #   context: demo
+    #   dockerfile: Dockerfile
+    # depends_on:
+    #   - mailpit
 
   # draftservice:
     # build:
@@ -77,7 +77,7 @@ services:
     restart: unless-stopped
       
   comments:
-    image: comments
+    # image: comments
     container_name: comments
     depends_on:
       comments-db:
@@ -87,8 +87,8 @@ services:
     build:
       context: .
       dockerfile: comments/src/Dockerfile
-    ports:
-      - 8080:8080
+    # ports: - you can't take 8080 as it's already taken
+    #   - 8080:8080
     networks:
       - happy-headlines-network
   comments-db:

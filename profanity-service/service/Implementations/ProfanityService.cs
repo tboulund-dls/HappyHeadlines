@@ -27,8 +27,8 @@ public class ProfanityService : IService
         return await _repository.AddWord(word);
     }
 
-    public async Task<bool> DeleteWord(int id)
+    public async Task<bool> DeleteWord(string id)
     {
-        return await _repository.DeleteWord(id);
+        throw new NotImplementedException();
     }
 }

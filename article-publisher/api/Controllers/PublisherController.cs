@@ -15,13 +15,6 @@ public class PublisherController : ControllerBase
         _publisher = publisher;
     }
 
-    [HttpPost("draft")]
-    public IActionResult SaveDraft([FromBody] Draft draft)
-    {
-        _publisher.SaveDraft(draft);
-        return Ok(draft);
-    }
-
     [HttpPost("publish")]
     public IActionResult Publish([FromBody] Draft draft)
     {
@@ -39,11 +32,6 @@ public class PublisherController : ControllerBase
     [HttpGet("published")]
     public IActionResult GetPublished() => Ok(_publisher.GetPublishedArticles());
     
-
-    [HttpGet("drafts")]
-    public IActionResult GetDrafts() => Ok(_publisher.GetDrafts());
-    
-    
     
     [HttpDelete("article/{articleId}")]
     public IActionResult DeleteArticle(string articleId)
@@ -60,24 +48,6 @@ public class PublisherController : ControllerBase
     {
         var result = _publisher.UpdateArticle(articleId, updatedArticle);
         if (result == null) return NotFound(new { message = "Article not found." });
-
-        return Ok(result);
-    }
-    
-    [HttpDelete("draft/{draftId}")]
-    public IActionResult DeleteDraft(string draftId)
-    {
-        var result = _publisher.DeleteDraft(draftId);
-        if (!result) return NotFound(new { message = "Draft not found." });
-
-        return Ok(new { message = "Draft deleted successfully." });
-    }
-
-    [HttpPut("draft/{draftId}")]
-    public IActionResult UpdateDraft(string draftId, [FromBody] Draft updatedDraft)
-    {
-        var result = _publisher.UpdateDraft(draftId, updatedDraft);
-        if (result == null) return NotFound(new { message = "Draft not found." });
 
         return Ok(result);
     }

@@ -7,15 +7,23 @@ services:
     # depends_on:
     #   - mailpit
 
-  # draftservice:
-    # build:
-      # context: DraftService
-      # dockerfile: DOCKERFILE
-    # container_name: draftservice
-    # ports:
-      # - "5000:8080"
-    # depends_on:
-      # - rabbitmq
+  test:
+    image: ghcr.io/tboulund-dls/happy-headlines-demo:latest
+    build:
+      context: demo
+      dockerfile: Dockerfile
+    depends_on:
+      - mailpit
+
+  draftservice:
+    build:
+      context: DraftService
+      dockerfile: DOCKERFILE
+    container_name: draftservice
+    ports:
+      - "5000:8080"
+    depends_on:
+      - rabbitmq
 
   structurizr:
     image: structurizr/lite
@@ -39,15 +47,51 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "15672:15672"
+  profanityapi:
+    image: profanityapi
+    build:
+      context: .
+      dockerfile: profanity-service/Dockerfile
     environment:
-      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
+      - mongoconn=mongodb://profanityuser:!Profanitypass123@profanitydb:27017/ProfanityService?authSource=admin
+      - dbname=ProfanityService
+      - redisconn=profanitycache:6379
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:9000
+    ports:
+      - 9000:9000
+      - 9081:9001
+    depends_on:
+      - profanitydb
+      - profanitycache
+  
+  profanityportal:
+    build:
+      context: ./profanity-service/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    depends_on:
+      - profanityapi
+
+  profanitydb:
+    image: mongodb/mongodb-community-server:7.0.5-ubuntu2204
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=profanityuser
+      - MONGODB_INITDB_ROOT_PASSWORD=!Profanitypass123
+    ports:
+      - 27017:27017
     volumes:
-      - rabbitmq-data:/var/lib/rabbitmq
-      - ./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
+      - profanitydata:/var/lib/mongodb/data
+
+  profanitycache:
+    image: redis/redis-stack-server:latest
+    ports: 
+      - 6379:6379
+    
+    
+      
+    
 
   featurehub:
     image: featurehub/party-server:latest
@@ -56,26 +100,6 @@ services:
       - featurehub-h2-data:/db
     ports:
       - 8085:8085
-  
-  subscriber-service:
-    image: ghcr.io/tboulund-dls/happy-headlines-subscriber-service:latest
-    build:
-      context: .
-      dockerfile: src/Squads/Purple/SubscriberService/SubscriberService/Dockerfile
-    environment:
-      RabbitMQ__Host: ${RABBITMQ_HOST:-rabbitmq}
-      RabbitMQ__Username: ${RABBITMQ_USERNAME}
-      RabbitMQ__Password: ${RABBITMQ_PASSWORD}
-      Redis__ConnectionString: ${REDIS_CONNECTION_STRING:-redis:6379}
-    depends_on:
-      - rabbitmq
-      - redis
-    restart: unless-stopped
-
-  redis:
-    image: redis:latest
-    restart: unless-stopped
-      
   comments:
     # image: comments
     container_name: comments
@@ -129,6 +153,36 @@ services:
       FLYWAY_CONNECT_RETRIES: 50
     networks:
       - happy-headlines-network
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - ./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
+
+  
+  subscriber-service:
+    image: ghcr.io/tboulund-dls/happy-headlines-subscriber-service:latest
+    build:
+      context: .
+      dockerfile: src/Squads/Purple/SubscriberService/SubscriberService/Dockerfile
+    environment:
+      RabbitMQ__Host: ${RABBITMQ_HOST:-rabbitmq}
+      RabbitMQ__Username: ${RABBITMQ_USERNAME}
+      RabbitMQ__Password: ${RABBITMQ_PASSWORD}
+      Redis__ConnectionString: ${REDIS_CONNECTION_STRING:-redis:6379}
+    depends_on:
+      - rabbitmq
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
 
 
   
@@ -137,6 +191,7 @@ volumes:
   rabbitmq-data:
   featurehub-h2-data:
   postgres_data:
+  profanitydata:
 
 networks:
   happy-headlines-network:

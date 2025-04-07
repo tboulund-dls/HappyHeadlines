@@ -5,4 +5,6 @@
 # Database for Profanity
 Database containing a single table over words considered profanity. <br>
 each word is linked to a primary. <br>
-The database is to be written in postgres.
+The database is to be written in a mongo database.
+
+Additionally, we plan to use a redish database for caching.

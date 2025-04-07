@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseURL: 'http://profanityapi:8081/SearchEngine'
+  baseURL: 'http://localhost:9000/Profanity'
 };

@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   baseURL: window.location.hostname === 'localhost'
     ? 'http://localhost:5216/Profanity' // Local dev
-    : 'http://profanityapi:8081/SearchEngine' // Docker internal network
+    : 'http://localhost:9000/Profanity' // Docker internal network
 };
 
 /*

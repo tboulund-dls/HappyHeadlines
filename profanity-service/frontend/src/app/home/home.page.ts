@@ -29,18 +29,19 @@ export class HomePage implements OnInit{
       word: this.WordFc.value,
     }
 
-    word = await firstValueFrom(this.http.post<WordModel>(environment.baseURL + 'Profanity', word))
+    word = await firstValueFrom(this.http.post<WordModel>(environment.baseURL, word))
 
     this.Words.push(word)
   }
 
   async DeleteWord(wordId: WordModel) {
-    await firstValueFrom(this.http.delete(environment.baseURL + 'Profanity/' + wordId.word));
+
+    await firstValueFrom(this.http.delete(environment.baseURL + '/' + wordId.word));
     this.getMessages()
   }
 
   private async getMessages() {
-    const call = this.http.get<WordModel[]>(environment.baseURL + "Profanity");
+    const call = this.http.get<WordModel[]>(environment.baseURL);
     call.subscribe((resData: WordModel[]) => {
       this.Words = resData;
     })

@@ -82,18 +82,23 @@ public class ProfanityService : IService
             throw new Exception("Error while trying to clean message");
         }
     }
+    
 
-    public async Task<WordModel> AddWord(WordModel word)
+    public async Task<WordModel> AddWord(string word)
     {
         try
         {
-            var response = await _repository.AddWord(word);
+            var wordModel = new WordModel
+            {
+                Word = word,
+            };
+            var response = await _repository.AddWord(wordModel);
             if (response)
             {
-                var cacheResponse = _cacheRepository.CreateOrUpdateAsync(word);
+                var cacheResponse = _cacheRepository.CreateOrUpdateAsync(wordModel);
                 if (cacheResponse.IsCompletedSuccessfully)
                 {
-                    return word;
+                    return wordModel;
                 }
             }
             return null;

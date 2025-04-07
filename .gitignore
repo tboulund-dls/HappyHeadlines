@@ -68,5 +68,4 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,macos,visualstudiocode
 *.code-workspace
-
-docs/.structurizr
+docs/.structurizr/index

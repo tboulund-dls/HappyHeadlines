@@ -2,6 +2,9 @@
 
 # Subscriber Queue
 When a new subscriber is added to the database, a message is sent to the subscriber queue. The message contains the subscriber's email and the subscription type.
+
+Exchange: `SharedModels:SubscriptionCreatedEvent`
+
 ```json
 {
   "subscriberMail": "string",

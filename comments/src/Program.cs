@@ -19,10 +19,12 @@ var connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username=
 builder.Services.AddDbContext<CommentDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Register repositories
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddHttpClient<ICommentService, CommentService>(client =>
+{
+    client.BaseAddress = new Uri("http://your-profanity-service-url/"); // e.g. http://localhost:5001/
+});
 
-// Register services
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 
 // Add automapper

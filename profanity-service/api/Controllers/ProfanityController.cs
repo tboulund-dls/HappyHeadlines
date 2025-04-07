@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using service.Interfaces;
-using SharedModels;
 using service.Models;
+using SharedModels;
 
 namespace api.Controllers;
 
@@ -42,9 +42,9 @@ public class ProfanityController : ControllerBase
     {
         if (string.IsNullOrEmpty(word)) return BadRequest();
 
-        bool success = await _service.AddWord(word);
+        var response = await _service.AddWord(word);
 
-        return success ? Created() : Conflict();
+        return Ok(response);
     }
 
     [HttpDelete] 

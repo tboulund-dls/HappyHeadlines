@@ -45,12 +45,11 @@ public class ProfanityController : ControllerBase
         return success ? Created() : Conflict();
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteWord([FromBody] string word)
+    [HttpDelete] [Route("{wordId}")] public async Task<IActionResult> DeleteWord([FromRoute] string wordId)
     {
-        if (string.IsNullOrEmpty(word)) return BadRequest();
+        if (string.IsNullOrEmpty(wordId)) return BadRequest();
         
-        bool success = await _service.DeleteWord(word);
+        bool success = await _service.DeleteWord(wordId);
         
         return success ? Ok() : Conflict();
     }

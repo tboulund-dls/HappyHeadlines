@@ -1,7 +1,6 @@
 ﻿using infrastrucure.Context;
 using infrastrucure.interfaces;
 using infrastrucure.Mappers;
-using infrastrucure.Models;
 using MongoDB.Driver;
 using service.Models;
 

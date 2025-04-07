@@ -29,8 +29,6 @@ export class HomePage implements OnInit{
       word: this.WordFc.value!,
     }
 
-    console.log(word );
-
     const call = this.http.post<WordModel>(environment.baseURL,word);
     const newWord = await firstValueFrom(call);
 

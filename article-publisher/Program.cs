@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton(new ConcurrentBag<Article>());
-builder.Services.AddSingleton(new ConcurrentBag<Draft>());
+builder.Services.AddSingleton(new List<Article>());
+builder.Services.AddSingleton(new List<Draft>());
 builder.Services.AddSingleton<ArticleQueueService>();
 builder.Services.AddSingleton<PublisherService>();
 builder.Services.AddSingleton<IConnection>(sp =>

@@ -22,7 +22,7 @@ public class ProfanityService : IService
         {
             IEnumerable<WordModel> words = await _repository.GetWords();
             words = words.ToList();
-            if (words.Count() == 0 && words is not null)
+            if (words.Count() > 0 && words is not null)
             {
                 foreach (var word in words)
                 {
@@ -58,9 +58,9 @@ public class ProfanityService : IService
                     foundWords.Add(cacheWord.Word, new string('*',word.Length));
                 }
                 WordModel? dbWord = await _repository.Lookup(wordModel.Word);
-                if (dbWord is not null)
+                if (dbWord is not null && cacheWord is null)
                 {
-                    await _cacheRepository.GetByIdAsync(dbWord);
+                    await _repository.Lookup(dbWord.Word);
                     foundWords.Add(dbWord.Word, new string('*', word.Length));
                 }
             }
@@ -72,7 +72,7 @@ public class ProfanityService : IService
                 var regex = new Regex(pattern, RegexOptions.IgnoreCase);
                 if (result.Contains(fw.Key))
                 {
-                    result = regex.Replace(fw.Key, pattern);
+                    result = regex.Replace(fw.Value, pattern);
                 }
             }
             return result;
@@ -95,11 +95,8 @@ public class ProfanityService : IService
             var response = await _repository.AddWord(wordModel);
             if (response)
             {
-                var cacheResponse = _cacheRepository.CreateOrUpdateAsync(wordModel);
-                if (cacheResponse.IsCompletedSuccessfully)
-                {
-                    return wordModel;
-                }
+                await _cacheRepository.CreateOrUpdateAsync(wordModel);
+                return wordModel;
             }
             return null;
         }
@@ -113,8 +110,14 @@ public class ProfanityService : IService
     {
         try
         {
-            await _repository.DeleteWord(id);
-            return await _repository.DeleteWord(id);
+            var response = await _repository.DeleteWord(id);
+            if (response)
+            {
+                var word = new WordModel { Word = id };
+                await _cacheRepository.DeleteAsync(word);
+                return response;
+            }
+            return false;
         }
         catch (Exception e)
         {

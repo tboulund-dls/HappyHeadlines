@@ -62,6 +62,15 @@ services:
       - profanitydb
       - profanitycache
   
+  profanityportal:
+    build:
+      context: ./profanity-service/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8888:80"
+    depends_on:
+      - profanityapi
+  
   profanitydb:
     image: mongodb/mongodb-community-server:7.0.5-ubuntu2204
     environment:
@@ -72,9 +81,6 @@ services:
   
   profanitycache:
     image: redis/redis-stack-server:latest
-    
-    
-      
     
 
 volumes:

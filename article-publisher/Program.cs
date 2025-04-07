@@ -1,6 +1,7 @@
 using article_publisher.api.Models;
 using article_publisher.api.Services;
 using Microsoft.Net.Http.Headers;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,11 @@ builder.Services.AddSingleton(new List<Article>());
 builder.Services.AddSingleton(new List<Draft>());
 builder.Services.AddSingleton<ArticleQueueService>();
 builder.Services.AddSingleton<PublisherService>();
+builder.Services.AddSingleton<IConnection>(sp =>
+{
+    var factory = sp.GetRequiredService<IConnectionFactory>();
+    return factory.CreateConnection();
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using article_publisher.api.Models;
 using article_publisher.api.Services;
 using Microsoft.Net.Http.Headers;
@@ -7,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton(new List<Article>());
-builder.Services.AddSingleton(new List<Draft>());
+builder.Services.AddSingleton(new ConcurrentBag<Article>());
+builder.Services.AddSingleton(new ConcurrentBag<Draft>());
 builder.Services.AddSingleton<ArticleQueueService>();
 builder.Services.AddSingleton<PublisherService>();
 builder.Services.AddSingleton<IConnection>(sp =>
@@ -37,6 +38,7 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+app.UseRouting();
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -71,6 +73,5 @@ app.UseSpa(conf =>
 });
 
 
-app.UseRouting();
 app.MapControllers();
 app.Run();

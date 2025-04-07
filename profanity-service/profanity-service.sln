@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "service", "service\service.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "infrastrucure", "infrastrucure\infrastrucure.csproj", "{6F0D215B-5B12-4467-AA93-C240BD2EEA51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "..\SharedModels\SharedModels.csproj", "{D01E6F13-2E7C-4C93-ACC0-E91FA3B34A7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{6F0D215B-5B12-4467-AA93-C240BD2EEA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F0D215B-5B12-4467-AA93-C240BD2EEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F0D215B-5B12-4467-AA93-C240BD2EEA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D01E6F13-2E7C-4C93-ACC0-E91FA3B34A7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D01E6F13-2E7C-4C93-ACC0-E91FA3B34A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D01E6F13-2E7C-4C93-ACC0-E91FA3B34A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D01E6F13-2E7C-4C93-ACC0-E91FA3B34A7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

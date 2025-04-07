@@ -1,12 +1,10 @@
-﻿using service.Models;
-
-namespace service.Interfaces;
+﻿namespace service.Interfaces;
 
 public interface IService
 {
-    Task<IEnumerable<WordModel>> getWords();
+    Task<IEnumerable<string>> getWords();
     Task<string> Clean(string message);
-    Task<bool> AddWord(WordModel word);
+    Task<bool> AddWord(string word);
     Task<bool> DeleteWord(string id);
 
 }

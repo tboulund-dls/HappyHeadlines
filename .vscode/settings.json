@@ -3,5 +3,18 @@
     "plantuml.exportOutDir": "/",
     "plantuml.exportSubFolder": false,
     "mermaid-editor.generate.quality": 100,
-    "mermaid-editor.generate.scale": 1
+    "mermaid-editor.generate.scale": 1,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "happyheadlines",
+            "group": "happyheadlines",
+            "database": "comments",
+            "username": "postgres",
+            "password": "postgres"
+        }
+    ]
 }

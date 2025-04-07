@@ -56,7 +56,7 @@ services:
     environment:
       - mongoconn=mongodb://profanityuser:!Profanitypass123@profanitydb:27017/ProfanityService?authSource=admin
       - dbname=ProfanityService
-      - redishconn=randomredish
+      - redisconn=profanitycache:6379
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:9000
     ports:
@@ -78,6 +78,8 @@ services:
   
   profanitycache:
     image: redis/redis-stack-server:latest
+    ports: 
+      - 6379:6379
     
     
       

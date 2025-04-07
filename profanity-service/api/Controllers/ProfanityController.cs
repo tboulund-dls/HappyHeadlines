@@ -40,9 +40,9 @@ public class ProfanityController : ControllerBase
     {
         if (string.IsNullOrEmpty(word.Word)) return BadRequest();
 
-        bool success = await _service.AddWord(word);
+        var response = await _service.AddWord(word);
 
-        return success ? Created() : Conflict();
+        return Ok(response);
     }
 
     [HttpDelete]

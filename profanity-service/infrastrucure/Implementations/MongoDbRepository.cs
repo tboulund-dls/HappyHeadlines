@@ -31,7 +31,7 @@ public class MongoDbRepository : IRepository
         
     }
 
-    public async Task<WordModel> Lookup(string profanity)
+    public async Task<WordModel?> Lookup(string profanity)
     {
         try
         {

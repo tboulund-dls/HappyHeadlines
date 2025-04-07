@@ -6,7 +6,7 @@ public interface IService
 {
     Task<IEnumerable<WordModel>> getWords();
     Task<string> Clean(string message);
-    Task<bool> AddWord(WordModel word);
+    Task<WordModel> AddWord(WordModel word);
     Task<bool> DeleteWord(string id);
 
 }

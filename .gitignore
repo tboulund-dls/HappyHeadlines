@@ -1,4 +1,6 @@
 .env
+.vscode/
+**/.idea
 
 # Created by https://www.toptal.com/developers/gitignore/api/dotnetcore,macos,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=dotnetcore,macos,visualstudiocode
@@ -54,7 +56,7 @@ Temporary Items
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
-
+!.code-workspace
 # Local History for Visual Studio Code
 .history/
 
@@ -67,3 +69,6 @@ Temporary Items
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,macos,visualstudiocode
+*.code-workspace
+
+docs/.structurizr

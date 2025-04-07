@@ -47,15 +47,7 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "15672:15672"
-    environment:
-      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
-    volumes:
-      - rabbitmq-data:/var/lib/rabbitmq
-      - ./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
+  
 
   profanityapi:
     image: profanityapi
@@ -63,10 +55,14 @@ services:
       context: .
       dockerfile: profanity-service/Dockerfile
     environment:
-      - mongoconn=random
-      - redishconn=randomredish
+      - mongoconn=mongodb://profanityuser:!Profanitypass123@profanitydb:27017/ProfanityService?authSource=admin
+      - dbname=ProfanityService
+      - redisconn=profanitycache:6379
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:9000
     ports:
-      - "9081:8081"
+      - 9000:9000
+      - 9081:9001
     depends_on:
       - profanitydb
       - profanitycache
@@ -74,13 +70,21 @@ services:
   profanitydb:
     image: mongodb/mongodb-community-server:7.0.5-ubuntu2204
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=profanityuser
-      - MONGO_INITDB_ROOT_PASSWORD=!Profanitypass123
+      - MONGODB_INITDB_ROOT_USERNAME=profanityuser
+      - MONGODB_INITDB_ROOT_PASSWORD=!Profanitypass123
+    ports:
+      - 27017:27017
     volumes:
       - profanitydata:/var/lib/mongodb/data
 
   profanitycache:
     image: redis/redis-stack-server:latest
+    ports: 
+      - 6379:6379
+    
+    
+      
+    
 
   featurehub:
     image: featurehub/party-server:latest
@@ -142,6 +146,16 @@ services:
       FLYWAY_CONNECT_RETRIES: 50
     networks:
       - happy-headlines-network
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - ./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
 
 
 volumes:

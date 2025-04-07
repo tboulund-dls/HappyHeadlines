@@ -10,11 +10,13 @@ WORKDIR /src
 COPY ["profanity-service/api/api.csproj", "profanity-service/api/"]
 COPY ["profanity-service/service/service.csproj", "profanity-service/service/"]
 COPY ["profanity-service/infrastrucure/infrastrucure.csproj", "profanity-service/infrastrucure/"]
+COPY ["SharedModels/SharedModels.csproj", "SharedModels/"]
 RUN dotnet restore "profanity-service/api/api.csproj"
 
 COPY profanity-service/api/ profanity-service/api/
 COPY profanity-service/service/ profanity-service/service/
 COPY profanity-service/infrastrucure/ profanity-service/infrastrucure/
+COPY SharedModels/ SharedModels/
 
 WORKDIR "profanity-service/api"
 RUN dotnet build "api.csproj" -c $BUILD_CONFIGURATION -o /app/build

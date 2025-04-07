@@ -1,34 +1,37 @@
 ﻿using infrastrucure.interfaces;
 using service.Interfaces;
+using service.Models;
 
 namespace service;
 
 public class ProfanityService : IService
 {
     private readonly IRepository _repository;
+    private readonly ICacheRepository _cacheRepository;
 
-    public ProfanityService(IRepository repository)
+    public ProfanityService(IProfanityServiceArgs args)
     {
-        _repository = repository;
+        _repository = args.Repository;
+        _cacheRepository = args.CacheRepository;
     }
 
-    public async Task<IEnumerable<string>> getWords()
+    public async Task<IEnumerable<WordModel>> getWords()
     {
-        return await _repository.getWords();
+        return await _repository.GetWords();
     }
 
     public async Task<string> Clean(string message)
     {
-        return await _repository.Clean(message);
+        throw new NotImplementedException();
     }
 
     public async Task<bool> AddWord(string word)
     {
-        return await _repository.AddWord(word);
+        return await _repository.AddWord(new WordModel{ Word = word });
     }
 
     public async Task<bool> DeleteWord(string id)
     {
-        throw new NotImplementedException();
+        return await _repository.DeleteWord(id);
     }
 }

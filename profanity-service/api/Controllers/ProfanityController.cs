@@ -38,9 +38,9 @@ public class ProfanityController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddWord([FromBody] WordModel? word)
+    public async Task<IActionResult> AddWord([FromBody] string? word)
     {
-        if (string.IsNullOrEmpty(word.Word)) return BadRequest();
+        if (string.IsNullOrEmpty(word)) return BadRequest();
 
         bool success = await _service.AddWord(word);
 

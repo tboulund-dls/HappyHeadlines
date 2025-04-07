@@ -25,13 +25,13 @@ public class ProfanityService : IService
         throw new NotImplementedException();
     }
 
-    public async Task<bool> AddWord(WordModel word)
+    public async Task<bool> AddWord(string word)
     {
-        return await _repository.AddWord(word);
+        return await _repository.AddWord(new WordModel{ Word = word });
     }
 
     public async Task<bool> DeleteWord(string id)
     {
-        throw new NotImplementedException();
+        return await _repository.DeleteWord(id);
     }
 }

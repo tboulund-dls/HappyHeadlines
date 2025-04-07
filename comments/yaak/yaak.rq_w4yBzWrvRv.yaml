@@ -1,0 +1,22 @@
+type: http_request
+model: http_request
+id: rq_w4yBzWrvRv
+createdAt: 2025-04-01T09:01:07.239980100
+updatedAt: 2025-04-01T11:12:37.276768300
+workspaceId: wk_cUivN8efQf
+folderId: fl_SajA5R5S7f
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: DELETE
+name: DeleteComment
+sortPriority: 0.0
+url: http://localhost:8080/api/v1/comments/fe1457d1-954b-4aee-8a00-cf4bcf2db66b
+urlParameters:
+- enabled: true
+  name: ''
+  value: ''
+  id: eS7WqTy9E4

@@ -22,7 +22,7 @@ public class ProfanityController : ControllerBase
     {
         IEnumerable<WordModel> result = await _service.getWords();
         
-        return result.Any() ? Ok(result) : BadRequest();
+        return result != null ? Ok(result) : NotFound();
     }
     
     [HttpPost]
@@ -38,11 +38,11 @@ public class ProfanityController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddWord([FromBody] string? word)
+    public async Task<IActionResult> AddWord([FromBody] WordModel word)
     {
-        if (string.IsNullOrEmpty(word)) return BadRequest();
+        if (string.IsNullOrEmpty(word.Word)) return BadRequest();
 
-        var response = await _service.AddWord(word);
+        var response = await _service.AddWord(word.Word);
 
         return Ok(response);
     }

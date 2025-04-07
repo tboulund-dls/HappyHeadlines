@@ -26,17 +26,21 @@ export class HomePage implements OnInit{
   async AddWord() {
     if (this.WordFc.value == null) return
     let word :WordModel = {
-      word: this.WordFc.value,
+      word: this.WordFc.value!,
     }
 
-    word = await firstValueFrom(this.http.post<WordModel>(environment.baseURL, word))
+    console.log(word );
 
-    this.Words.push(word)
+    const call = this.http.post<WordModel>(environment.baseURL,word);
+    const newWord = await firstValueFrom(call);
+
+    this.Words.push(newWord)
   }
 
   async DeleteWord(wordId: WordModel) {
 
     await firstValueFrom(this.http.delete(environment.baseURL + '/' + wordId.word));
+
     this.getMessages()
   }
 

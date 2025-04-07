@@ -41,10 +41,10 @@ jobs:
           docker compose -f compose.yaml -f compose-live.yaml push
 
       # Mark this version as latest
-      - name: Mark as latest
-        run: |
-          docker tag ghcr.io/tboulund-dls/happy-headlines-demo:${{ steps.semver-app.outputs.version }} ghcr.io/tboulund-dls/happy-headlines-demo:latest
-          docker push ghcr.io/tboulund-dls/happy-headlines-demo:latest
+      # - name: Mark as latest
+      #   run: |
+      #     docker tag ghcr.io/tboulund-dls/happy-headlines-demo:${{ steps.semver-app.outputs.version }} ghcr.io/tboulund-dls/happy-headlines-demo:latest
+      #     docker push ghcr.io/tboulund-dls/happy-headlines-demo:latest
           
       # Copy the Docker Compose file to the server
       - name: Deliver to server
@@ -53,7 +53,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_SERVER_IP }}
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           password: ${{ secrets.PRODUCTION_SERVER_PASSWORD }}
-          source: "compose.yaml,rabbitmq-definitions.json,compose-live.yaml,docs"
+          source: "*" #"compose.yaml,rabbitmq-definitions.json,compose-live.yaml,docs"
           target: hh/
           rm: true
           
@@ -70,6 +70,6 @@ jobs:
           envs: NEW_VERSION,RABBITMQ_ADMIN_PASSWORD
           script: |
             cd hh
-            docker compose -f compose.yaml -f compose-live.yaml down
-            docker compose -f compose.yaml -f compose-live.yaml pull
-            docker compose -f compose.yaml -f compose-live.yaml up -d
+            docker compose down
+            docker compose pull
+            docker compose up -d

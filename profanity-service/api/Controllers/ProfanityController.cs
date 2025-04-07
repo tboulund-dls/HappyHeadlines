@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using service.Interfaces;
-using service.Models;
+using SharedModels;
 
 namespace api.Controllers;
 
@@ -24,19 +24,20 @@ public class ProfanityController : ControllerBase
         return result.Any() ? Ok(result) : BadRequest();
     }
     
-    [HttpGet]
+    [HttpPost]
     [Route("clean")]
-    public async Task<IActionResult> Clean([FromBody] string message)
+    public async Task<IActionResult> Clean([FromBody] ProfanityFilterRequest message)
     {
-        if (string.IsNullOrEmpty(message)) return BadRequest();
+        string text = message.Text;
+        if (string.IsNullOrEmpty(text)) return BadRequest();
 
-        string? clean = await _service.Clean(message);
+        string? clean = await _service.Clean(text);
 
         return !string.IsNullOrEmpty(clean) ? Ok(clean) : NoContent();
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddWord([FromBody] WordModel? word)
+    public async Task<IActionResult> AddWord([FromBody] string? word)
     {
         if (string.IsNullOrEmpty(word.Word)) return BadRequest();
 

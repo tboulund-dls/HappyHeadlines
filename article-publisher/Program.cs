@@ -12,6 +12,16 @@ builder.Services.AddSingleton(new List<Article>());
 builder.Services.AddSingleton(new List<Draft>());
 builder.Services.AddSingleton<ArticleQueueService>();
 builder.Services.AddSingleton<PublisherService>();
+
+builder.Services.AddSingleton<IConnectionFactory>(sp => new ConnectionFactory()
+{
+    HostName = "localhost",
+    UserName = "guest",
+    Password = "guest",
+    VirtualHost = "/",
+    AutomaticRecoveryEnabled = true 
+});
+
 builder.Services.AddSingleton<IConnection>(sp =>
 {
     var factory = sp.GetRequiredService<IConnectionFactory>();
@@ -21,10 +31,10 @@ builder.Services.AddSingleton<IConnection>(sp =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var frontEndRelativePath = "frontend/www/";
-
-builder.Services.AddSpaStaticFiles(configuration => 
-    { configuration.RootPath = frontEndRelativePath; });
+// var frontEndRelativePath = "frontend/www/";
+//
+// builder.Services.AddSpaStaticFiles(configuration => 
+//     { configuration.RootPath = frontEndRelativePath; });
 
 builder.Services.AddCors(options =>
 {
@@ -34,8 +44,6 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
-
-
 
 var app = builder.Build();
 app.UseRouting();
@@ -51,27 +59,28 @@ app.UseCors(options =>
         .AllowCredentials();
 });
 
-app.UseSpaStaticFiles(new StaticFileOptions()
-{
-    OnPrepareResponse = ctx =>
-    {
-        const int durationInSeconds = 60 * 60 * 24;
-        ctx.Context.Response.Headers[HeaderNames.CacheControl] =
-            "public,max-age=" + durationInSeconds;
-    }
+// app.UseSpaStaticFiles(new StaticFileOptions()
+// {
+//     OnPrepareResponse = ctx =>
+//     {
+//         const int durationInSeconds = 60 * 60 * 24;
+//         ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+//             "public,max-age=" + durationInSeconds;
+//     }
+// });
+
+// Map API endpoints to /api path
+app.Map("/api", apiApp => {
+    apiApp.UseEndpoints(endpoints => {
+        endpoints.MapControllers();
+    });
 });
 
-app.Map("/frontend",
-    (IApplicationBuilder frontendApp) =>
-    { frontendApp.UseSpa(spa =>
-        { spa.Options.SourcePath = "frontend/www/"; }); });
+// // Map frontend to /frontend path
+// app.Map("/frontend", frontendApp => {
+//     frontendApp.UseSpa(spa => {
+//         spa.Options.SourcePath = frontEndRelativePath;
+//     });
+// });
 
-
-app.UseSpa(conf =>
-{
-    conf.Options.SourcePath = frontEndRelativePath;
-});
-
-
-app.MapControllers();
 app.Run();

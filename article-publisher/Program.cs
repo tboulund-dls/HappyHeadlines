@@ -20,7 +20,7 @@ builder.Services.AddSingleton<IConnection>(sp =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var frontEndRelativePath = "./../frontend/www/";
+var frontEndRelativePath = "frontend/www/";
 
 builder.Services.AddSpaStaticFiles(configuration => 
     { configuration.RootPath = frontEndRelativePath; });

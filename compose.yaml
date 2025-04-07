@@ -7,6 +7,14 @@ services:
     # depends_on:
     #   - mailpit
 
+  test:
+    image: ghcr.io/tboulund-dls/happy-headlines-demo:latest
+    build:
+      context: demo
+      dockerfile: Dockerfile
+    depends_on:
+      - mailpit
+
   draftservice:
     build:
       context: DraftService

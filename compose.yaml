@@ -47,15 +47,7 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "15672:15672"
-    environment:
-      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
-    volumes:
-      - rabbitmq-data:/var/lib/rabbitmq
-      - ./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
+  
 
   profanityapi:
     image: profanityapi
@@ -65,7 +57,7 @@ services:
     environment:
       - mongoconn=mongodb://profanityuser:!Profanitypass123@profanitydb:27017/ProfanityService?authSource=admin
       - dbname=ProfanityService
-      - redishconn=randomredish
+      - redisconn=profanitycache:6379
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:9000
     ports:
@@ -87,6 +79,12 @@ services:
 
   profanitycache:
     image: redis/redis-stack-server:latest
+    ports: 
+      - 6379:6379
+    
+    
+      
+    
 
   featurehub:
     image: featurehub/party-server:latest
@@ -148,6 +146,16 @@ services:
       FLYWAY_CONNECT_RETRIES: 50
     networks:
       - happy-headlines-network
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - ./rabbitmq-definitions.json:/etc/rabbitmq/definitions.json
 
 
 volumes:

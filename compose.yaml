@@ -66,6 +66,15 @@ services:
     depends_on:
       - profanitydb
       - profanitycache
+  
+  profanityportal:
+    build:
+      context: ./profanity-service/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    #depends_on:
+      #- profanityapi
 
   profanitydb:
     image: mongodb/mongodb-community-server:7.0.5-ubuntu2204

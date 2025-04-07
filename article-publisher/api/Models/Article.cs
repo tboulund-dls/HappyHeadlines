@@ -7,5 +7,5 @@ public class Article
     public string Content { get; set; }
     public Author Author { get; set; }
     public DateTime PublishedAt { get; set; }
-    public List<Comment> Comments { get; set; } = new();
+    // public List<Comment> Comments { get; set; } = new();
 }

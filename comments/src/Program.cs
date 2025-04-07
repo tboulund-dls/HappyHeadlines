@@ -19,11 +19,11 @@ var connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username=
 builder.Services.AddDbContext<CommentDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Register repositories
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-
-// Register services
-builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddHttpClient<ICommentService, CommentService>(client =>
+{
+    client.BaseAddress = new Uri("http://profanityapi:9000/");
+});
 
 // Add automapper
 builder.Services.AddAutoMapper(typeof(Program));

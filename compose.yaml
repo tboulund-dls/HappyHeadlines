@@ -64,6 +64,8 @@ services:
     depends_on:
       - profanitydb
       - profanitycache
+    networks:
+      - happy-headlines-network
   
   profanityportal:
     build:
@@ -88,10 +90,8 @@ services:
     image: redis/redis-stack-server:latest
     ports: 
       - 6379:6379
-    
-    
-      
-    
+    networks:
+      - happy-headlines-network
 
   featurehub:
     image: featurehub/party-server:latest
@@ -101,7 +101,6 @@ services:
     ports:
       - 8085:8085
   comments:
-    # image: comments
     container_name: comments
     depends_on:
       comments-db:
@@ -111,8 +110,8 @@ services:
     build:
       context: .
       dockerfile: comments/src/Dockerfile
-    # ports: - you can't take 8080 as it's already taken
-    #   - 8080:8080
+    ports: 
+        - 2697:8080
     networks:
       - happy-headlines-network
   comments-db:

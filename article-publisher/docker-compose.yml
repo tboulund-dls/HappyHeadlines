@@ -1,4 +1,20 @@
+networks:
+  article-network:
+    driver: bridge
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: article-publisher-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./definitions.json:/etc/rabbitmq/definitions.json
+    restart: unless-stopped
+    networks:
+      - article-network
+
   backend:
     build:
       context: .
@@ -8,6 +24,10 @@ services:
       - "5000:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - rabbitmq
+    networks:
+      - article-network
 
   frontend:
     build:
@@ -18,3 +38,5 @@ services:
       - "4200:80"
     depends_on:
       - backend
+    networks:
+      - article-network

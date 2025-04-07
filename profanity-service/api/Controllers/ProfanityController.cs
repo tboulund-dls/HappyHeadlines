@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using service.Interfaces;
 using SharedModels;
+using service.Models;
 
 namespace api.Controllers;
 
@@ -19,7 +20,7 @@ public class ProfanityController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetWords()
     {
-        IEnumerable<string> result = await _service.getWords();
+        IEnumerable<WordModel> result = await _service.getWords();
         
         return result.Any() ? Ok(result) : BadRequest();
     }

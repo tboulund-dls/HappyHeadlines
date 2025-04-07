@@ -1,3 +1,4 @@
+using infrastrucure.Context;
 using infrastrucure.implementations;
 using infrastrucure.interfaces;
 using service;
@@ -7,7 +8,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddScoped<IRepository, BaseRepository>();
+builder.Services.AddScoped<IProfanityServiceArgs>(services =>
+{
+    var mongoDbContext = new MongoDbContext( Environment.GetEnvironmentVariable("mongoconn"), Environment.GetEnvironmentVariable("dbname"));
+    var redisDbContext = new RedisDbContext(Environment.GetEnvironmentVariable("redisconn"));
+    var repository = new MongoDbRepository(mongoDbContext);
+    var cache = new RedisDbRepository(redisDbContext, TimeSpan.FromHours(1));
+
+    return new ProfanityServiceArgs
+    {
+        Repository = repository,
+        CacheRepository = cache
+    };
+});
+
 builder.Services.AddScoped<IService, ProfanityService>();
 
 builder.Services.AddControllers();

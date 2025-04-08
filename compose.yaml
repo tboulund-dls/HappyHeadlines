@@ -85,6 +85,8 @@ services:
       - 27017:27017
     volumes:
       - profanitydata:/var/lib/mongodb/data
+    networks:
+      - happy-headlines-network
 
   profanitycache:
     image: redis/redis-stack-server:latest
